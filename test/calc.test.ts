@@ -82,3 +82,16 @@ describe("calculate() reproduces the template", () => {
     expect(c2.blockEstimationTotal).toBeCloseTo(308);
   });
 });
+
+describe("default holidays (US federal 2027–2028)", () => {
+  it("are skipped by the phase schedule", async () => {
+    const { DEFAULT_HOLIDAYS } = await import("../src/shared/holidays");
+    const p = sample();
+    p.holidays = DEFAULT_HOLIDAYS.map((h) => h.date);
+    p.startDate = "2027-06-28"; // Mon; 2027-07-05 (Independence Day observed) must be skipped
+    p.phases = p.phases.map((ph, i) => ({ ...ph, workingDays: i === 0 ? 10 : ph.workingDays }));
+    expect(calculate(p).phaseEnd[0]).toBe("2027-07-12");
+    expect(DEFAULT_HOLIDAYS).toHaveLength(22);
+    expect(DEFAULT_HOLIDAYS.every((h) => h.date >= "2027-01-01" && h.date <= "2028-12-31")).toBe(true);
+  });
+});

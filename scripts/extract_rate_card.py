@@ -1,5 +1,5 @@
 #!/usr/bin/env python3
-"""Extract the Rate Card (Fix-Price / A-la-Carte tiers) and the holidays list
+"""Extract the Rate Card (Fix-Price / A-la-Carte tiers)
 from Project_Estimation_Template.xlsx into worker/rateCard.json.
 
 Usage: python3 -I scripts/extract_rate_card.py path/to/Project_Estimation_Template.xlsx
@@ -7,7 +7,7 @@ Usage: python3 -I scripts/extract_rate_card.py path/to/Project_Estimation_Templa
 The JSON is bundled into the Worker only (never into the static frontend), so
 the full rate card is never shipped to the browser.
 """
-import json, sys, os, datetime
+import json, sys, os
 import openpyxl
 
 def base_role(name, grade):
@@ -47,17 +47,11 @@ def main(path):
             "grade": grade,
             "rates": [num(rc.cell(r, c).value) for c in range(14, 19)],
         })
-    hol = wb["Holidays"]
-    holidays = []
-    for r in range(1, hol.max_row + 1):
-        v = hol.cell(r, 1).value
-        if isinstance(v, (datetime.date, datetime.datetime)):
-            holidays.append(v.strftime("%Y-%m-%d"))
-    out = {"title": rc["A1"].value, "tiers": tiers, "rows": rows, "defaultHolidays": holidays}
+    out = {"title": rc["A1"].value, "tiers": tiers, "rows": rows}
     dst = os.path.join(os.path.dirname(__file__), "..", "worker", "rateCard.json")
     with open(dst, "w", encoding="utf-8") as f:
         json.dump(out, f, ensure_ascii=False, indent=1)
-    print(f"wrote {len(rows)} rate rows, {len(holidays)} holidays -> {os.path.normpath(dst)}")
+    print(f"wrote {len(rows)} rate rows -> {os.path.normpath(dst)}")
 
 if __name__ == "__main__":
     main(sys.argv[1])

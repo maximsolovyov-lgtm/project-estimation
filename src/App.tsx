@@ -6,6 +6,7 @@ import { calculate, type CheckState } from "./shared/calc";
 import { fmtDate } from "./shared/dates";
 import { blankProject, newAllocation, newPackage, newTeamMember, sampleProject, uid } from "./shared/factory";
 import { fmt } from "./format";
+import { holidayName } from "./shared/holidays";
 import { ALL_BLOCK, PHASE_COUNT, type Catalog, type ProjectData, type TeamMember } from "./shared/types";
 
 type Toast = { kind: "ok" | "bad" | "info"; text: string } | null;
@@ -563,10 +564,17 @@ export default function App() {
             <button className="add" onClick={() => update((d) => ({ ...d, assumptions: [...d.assumptions, { id: uid(), text: "" }] }))}>＋ Добавить допущение</button>
           </section>
           <section className="card">
-            <h2>Holidays <small>Пропускаются при расчёте дат фаз (WORKDAY)</small></h2>
+            <h2>
+              Holidays <small>Пропускаются при расчёте дат фаз (WORKDAY)</small>
+              {catalog.defaultHolidays.length > 0 && (
+                <button className="link-btn" onClick={() => update((d) => ({ ...d, holidays: [...catalog.defaultHolidays] }))}>
+                  Сбросить на стандартные (США 2027–2028)
+                </button>
+              )}
+            </h2>
             <div className="holidays">
               {data.holidays.map((h, i) => (
-                <span key={i} className="chip">
+                <span key={i} className="chip" title={holidayName(h)}>
                   <input type="date" value={h} onChange={(e) => update((d) => ({ ...d, holidays: d.holidays.map((x, k) => (k === i ? e.target.value : x)) }))} />
                   <button className="icon-btn danger" onClick={() => update((d) => ({ ...d, holidays: d.holidays.filter((_, k) => k !== i) }))}>✕</button>
                 </span>

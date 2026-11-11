@@ -1,6 +1,7 @@
 // Rate Card lookup — server-side only.
 import rateCard from "./rateCard.json";
 import type { Catalog, RateQuery } from "../src/shared/types";
+import { DEFAULT_HOLIDAYS } from "../src/shared/holidays";
 
 interface RateRow {
   name: string;
@@ -33,7 +34,7 @@ export function buildCatalog(): Catalog {
   return {
     roles: [...map.entries()].map(([role, grades]) => ({ role, grades })),
     tiers: TIERS,
-    defaultHolidays: rateCard.defaultHolidays as string[],
+    defaultHolidays: DEFAULT_HOLIDAYS.map((h) => h.date),
   };
 }
 

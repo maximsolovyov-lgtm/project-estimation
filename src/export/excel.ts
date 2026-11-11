@@ -7,6 +7,7 @@ import type { CalcResult } from "../shared/calc";
 import { isoToDay, dayToDate } from "../shared/dates";
 import { ALL_BLOCK, PHASE_COUNT, type ProjectData } from "../shared/types";
 import { safeFileName } from "../format";
+import { holidayName } from "../shared/holidays";
 
 const BLUE = "FF0B4FB3"; // input cells
 const HEAD_FILL = "FFDCE6F1";
@@ -393,8 +394,10 @@ export function buildWorkbook(p: ProjectData, c: CalcResult): ExcelJS.Workbook {
     const c2 = hs.getCell(`A${i + 1}`);
     c2.value = d(iso);
     c2.numFmt = "dd.mm.yyyy";
+    hs.getCell(`B${i + 1}`).value = holidayName(iso);
   });
   hs.getColumn("A").width = 14;
+  hs.getColumn("B").width = 34;
 
   // ---------------- Assumptions ----------------
   as.getColumn("A").width = 6;
