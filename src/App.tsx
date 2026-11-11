@@ -392,14 +392,26 @@ export default function App() {
         <section className="card">
           <h2>Phases &amp; roles engagement <small>Engagement в %: 100% = 1 FTE, 200% = 2 FTE</small></h2>
           <div className="table-wrap">
-            <table className="grid phases">
+            <table className="grid phases aligned">
+              <colgroup>
+                <col className="block-col" />
+                <col />
+                {PH.map((i) => <col key={i} className="ph-col" />)}
+                <col className="tot-col" />
+                <col className="del-col" />
+              </colgroup>
               <thead>
                 <tr>
-                  <th style={{ width: 150 }}>Block</th>
+                  <th>Block</th>
                   <th>Role · Grade · Tier</th>
                   {PH.map((i) => (
                     <th key={i} className="phase-h">
-                      <input value={data.phases[i].name} onChange={(e) => update((d) => ({ ...d, phases: d.phases.map((p, k) => (k === i ? { ...p, name: e.target.value } : p)) }))} />
+                      <textarea
+                        rows={2}
+                        title={data.phases[i].name}
+                        value={data.phases[i].name}
+                        onChange={(e) => update((d) => ({ ...d, phases: d.phases.map((p, k) => (k === i ? { ...p, name: e.target.value.replace(/\n/g, " ") } : p)) }))}
+                      />
                     </th>
                   ))}
                   <th className="r">TOTAL</th>
@@ -505,13 +517,21 @@ export default function App() {
         <section className="card">
           <h2>Service packages <small>Трудозатраты по блокам, m/d</small></h2>
           <div className="table-wrap">
-            <table className="grid packages">
+            <table className="grid packages aligned">
+              <colgroup>
+                <col className="block-col" />
+                <col className="id-col" />
+                <col />
+                {PH.map((i) => <col key={i} className="ph-col" />)}
+                <col className="tot-col" />
+                <col className="del-col" />
+              </colgroup>
               <thead>
                 <tr>
-                  <th style={{ width: 150 }}>Block</th>
-                  <th style={{ width: 110 }}>Package ID</th>
+                  <th>Block</th>
+                  <th>Package ID</th>
                   <th>Name of the service package</th>
-                  {PH.map((i) => <th key={i} className="r ph-name">{data.phases[i].name}</th>)}
+                  {PH.map((i) => <th key={i} className="c ph-name">{data.phases[i].name}</th>)}
                   <th className="r">Total, m/d</th>
                   <th></th>
                 </tr>
