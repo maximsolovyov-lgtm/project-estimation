@@ -1,4 +1,4 @@
-// "Сформировать презентацию": PowerPoint deck where every element of the estimate gets its own slide.
+// "Generate presentation": PowerPoint deck where every element of the estimate gets its own slide.
 
 import PptxGenJS from "pptxgenjs";
 import type { CalcResult, CheckState } from "../shared/calc";
@@ -83,7 +83,7 @@ export function buildDeck(p: ProjectData, c: CalcResult): PptxGenJS {
       s.addText(v, { x, y: 5.55, w: 2.9, h: 0.6, fontSize: 20, bold: true, color: "FFFFFF", fontFace: FONT });
       s.addText(k, { x, y: 6.15, w: 2.9, h: 0.4, fontSize: 11, color: "BFD4EA", fontFace: FONT });
     });
-    s.addText(new Date().toLocaleDateString("ru-RU"), { x: W - 3, y: 0.4, w: 2.5, h: 0.3, fontSize: 11, color: "BFD4EA", align: "right", fontFace: FONT });
+    s.addText(new Date().toLocaleDateString("en-GB"), { x: W - 3, y: 0.4, w: 2.5, h: 0.3, fontSize: 11, color: "BFD4EA", align: "right", fontFace: FONT });
   }
 
   // ---------- 2. Total for the project ----------

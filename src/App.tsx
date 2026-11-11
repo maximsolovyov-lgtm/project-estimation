@@ -48,7 +48,7 @@ export default function App() {
           }).catch(() => setData(blankProject(c.defaultHolidays)));
         } else setData(blankProject(c.defaultHolidays));
       })
-      .catch((e: Error) => notify({ kind: "bad", text: `Не удалось загрузить справочник ролей: ${e.message}` }));
+      .catch((e: Error) => notify({ kind: "bad", text: `Failed to load the role catalog: ${e.message}` }));
   }, [notify]);
 
   useEffect(() => {
@@ -87,12 +87,12 @@ export default function App() {
           : d,
       );
     } catch (e) {
-      notify({ kind: "bad", text: `Не удалось получить рейты: ${(e as Error).message}` });
+      notify({ kind: "bad", text: `Failed to get rates: ${(e as Error).message}` });
     }
   }, [notify]);
 
   function confirmDiscard() {
-    return !dirty || confirm("Есть несохранённые изменения. Продолжить без сохранения?");
+    return !dirty || confirm("You have unsaved changes. Continue without saving?");
   }
 
   // ---------- toolbar actions ----------
@@ -105,12 +105,12 @@ export default function App() {
     setShowCreate(false);
     localStorage.removeItem("pe:lastProject");
     if (kind === "sample") resolveRates(d.team);
-    notify({ kind: "info", text: "Новый проект создан. Не забудьте сохранить." });
+    notify({ kind: "info", text: "New project created. Don't forget to save it." });
   }
 
   async function save() {
     if (!data) return;
-    if (!data.name.trim()) return notify({ kind: "bad", text: "Укажите название проекта" });
+    if (!data.name.trim()) return notify({ kind: "bad", text: "Enter a project name" });
     setBusy("save");
     try {
       const saved = projectId ? await api.update(projectId, data) : await api.create(data);
@@ -118,9 +118,9 @@ export default function App() {
       setData(saved.data);
       setDirty(false);
       localStorage.setItem("pe:lastProject", saved.id);
-      notify({ kind: "ok", text: "Проект сохранён" });
+      notify({ kind: "ok", text: "Project saved" });
     } catch (e) {
-      notify({ kind: "bad", text: `Ошибка сохранения: ${(e as Error).message}` });
+      notify({ kind: "bad", text: `Save failed: ${(e as Error).message}` });
     } finally {
       setBusy(null);
     }
@@ -137,7 +137,7 @@ export default function App() {
       setShowOpen(false);
       localStorage.setItem("pe:lastProject", p.id);
     } catch (e) {
-      notify({ kind: "bad", text: `Не удалось открыть: ${(e as Error).message}` });
+      notify({ kind: "bad", text: `Failed to open: ${(e as Error).message}` });
     } finally {
       setBusy(null);
     }
@@ -151,7 +151,7 @@ export default function App() {
       await exportToExcel(data, calc);
     } catch (e) {
       console.error(e);
-      notify({ kind: "bad", text: `Ошибка выгрузки Excel: ${(e as Error).message}` });
+      notify({ kind: "bad", text: `Excel export failed: ${(e as Error).message}` });
     } finally {
       setBusy(null);
     }
@@ -165,7 +165,7 @@ export default function App() {
       await exportToPptx(data, calc);
     } catch (e) {
       console.error(e);
-      notify({ kind: "bad", text: `Ошибка формирования презентации: ${(e as Error).message}` });
+      notify({ kind: "bad", text: `Presentation generation failed: ${(e as Error).message}` });
     } finally {
       setBusy(null);
     }
@@ -174,7 +174,7 @@ export default function App() {
   if (!data || !calc || !catalog) {
     return (
       <div className="loading">
-        {toast ? <div className="alert bad">{toast.text}</div> : "Загрузка…"}
+        {toast ? <div className="alert bad">{toast.text}</div> : "Loading…"}
       </div>
     );
   }
@@ -227,17 +227,17 @@ export default function App() {
           <div>
             <div className="brand-title">Project Cost and Labor Estimation</div>
             <div className="brand-sub">
-              {projectId ? "Сохранённый проект" : "Новый проект (не сохранён)"}
-              {dirty && <span className="dirty"> · есть изменения</span>}
+              {projectId ? "Saved project" : "New project (not saved)"}
+              {dirty && <span className="dirty"> · unsaved changes</span>}
             </div>
           </div>
         </div>
         <nav className="actions">
-          <button onClick={() => confirmDiscard() && setShowCreate(true)}>＋ Создать проект</button>
-          <button className="primary" onClick={save} disabled={!!busy}>{busyLabel("save", "💾 Сохранить проект")}</button>
-          <button onClick={() => setShowOpen(true)} disabled={!!busy}>📂 Выбрать на редактирование</button>
-          <button onClick={exportExcel} disabled={!!busy}>{busyLabel("xlsx", "⬇ Выгрузить в Excel")}</button>
-          <button onClick={exportPptx} disabled={!!busy}>{busyLabel("pptx", "📊 Сформировать презентацию")}</button>
+          <button onClick={() => confirmDiscard() && setShowCreate(true)}>＋ Create project</button>
+          <button className="primary" onClick={save} disabled={!!busy}>{busyLabel("save", "💾 Save project")}</button>
+          <button onClick={() => setShowOpen(true)} disabled={!!busy}>📂 Open project</button>
+          <button onClick={exportExcel} disabled={!!busy}>{busyLabel("xlsx", "⬇ Export to Excel")}</button>
+          <button onClick={exportPptx} disabled={!!busy}>{busyLabel("pptx", "📊 Generate presentation")}</button>
         </nav>
       </header>
 
@@ -264,7 +264,7 @@ export default function App() {
                 <tr className="kv-group"><td colSpan={3}>Estimation</td></tr>
                 <tr>
                   <td>Work (roles)</td>
-                  <td className={`v ${chk(calc.checkTotal)}`} title="Зелёный — совпадает с Total efforts amount by Block, красный — расходится">
+                  <td className={`v ${chk(calc.checkTotal)}`} title="Green — matches Total efforts amount by Block, red — differs">
                     {fmt.num(calc.workRoles)}
                   </td>
                   <td className="u">m/d</td>
@@ -294,7 +294,7 @@ export default function App() {
           {/* ---------- Team ---------- */}
           <section className="card">
             <h2>
-              Team <small>Рейт подставляется из Rate Card (Fix-Price / A-la-Carte) только для выбранных ролей</small>
+              Team <small>Rate is taken from the Rate Card (Fix-Price / A-la-Carte) for the selected roles only</small>
             </h2>
             <div className="table-wrap">
               <table className="grid">
@@ -306,7 +306,7 @@ export default function App() {
                     <tr key={m.id}>
                       <td>
                         <select value={m.role} onChange={(e) => setTeam(i, { role: e.target.value })}>
-                          <option value="">— роль —</option>
+                          <option value="">— role —</option>
                           {catalog.roles.map((r) => <option key={r.role} value={r.role}>{r.role}</option>)}
                           {m.role && !catalog.roles.some((r) => r.role === m.role) && <option value={m.role}>{m.role}</option>}
                         </select>
@@ -323,12 +323,12 @@ export default function App() {
                           {catalog.tiers.map((t) => <option key={t} value={t}>{t}</option>)}
                         </select>
                       </td>
-                      <td className={`r ${m.role && m.grade && m.tier && !m.rate ? "chk-bad" : ""}`} title={m.role && m.grade && m.tier && !m.rate ? "Для этой комбинации нет рейта в Rate Card" : undefined}>
+                      <td className={`r ${m.role && m.grade && m.tier && !m.rate ? "chk-bad" : ""}`} title={m.role && m.grade && m.tier && !m.rate ? "No rate in the Rate Card for this combination" : undefined}>
                         {m.role && m.grade && m.tier ? fmt.num(m.rate) : ""}
                       </td>
                       <td className="r">{fmt.pct(calc.team[i]?.share ?? 0)}</td>
                       <td className="r">{fmt.num(calc.team[i]?.work ?? 0)}</td>
-                      <td><button className="icon-btn danger" title="Удалить" onClick={() => update((d) => ({ ...d, team: d.team.filter((_, k) => k !== i) }))}>✕</button></td>
+                      <td><button className="icon-btn danger" title="Delete" onClick={() => update((d) => ({ ...d, team: d.team.filter((_, k) => k !== i) }))}>✕</button></td>
                     </tr>
                   ))}
                 </tbody>
@@ -342,29 +342,29 @@ export default function App() {
                 </tfoot>
               </table>
             </div>
-            <button className="add" onClick={() => update((d) => ({ ...d, team: [...d.team, newTeamMember()] }))}>＋ Добавить участника</button>
+            <button className="add" onClick={() => update((d) => ({ ...d, team: [...d.team, newTeamMember()] }))}>＋ Add team member</button>
           </section>
         </div>
 
         <div className="grid-two">
           {/* ---------- Block Estimation ---------- */}
           <section className="card">
-            <h2>Block Estimation <small>Блоки проекта; часы блока «All» распределяются пропорционально</small></h2>
+            <h2>Block Estimation <small>Project blocks; effort booked to "All" is spread proportionally</small></h2>
             <table className="grid">
               <thead><tr><th>Block</th><th className="r">Estimation, m/d</th><th></th></tr></thead>
               <tbody>
                 {data.blocks.map((b, i) => (
                   <tr key={i}>
-                    <td><input value={b} placeholder="Название блока" onChange={(e) => renameBlock(i, e.target.value)} /></td>
+                    <td><input value={b} placeholder="Block name" onChange={(e) => renameBlock(i, e.target.value)} /></td>
                     <td className="r">{b.trim() ? fmt.num(calc.blockEstimation.find((x) => x.block === b)?.value ?? 0) : ""}</td>
-                    <td><button className="icon-btn danger" title="Удалить" onClick={() => update((d) => ({ ...d, blocks: d.blocks.filter((_, k) => k !== i) }))}>✕</button></td>
+                    <td><button className="icon-btn danger" title="Delete" onClick={() => update((d) => ({ ...d, blocks: d.blocks.filter((_, k) => k !== i) }))}>✕</button></td>
                   </tr>
                 ))}
-                <tr className="muted"><td>{ALL_BLOCK} <small>(служебный блок)</small></td><td className="r">×{fmt.num(calc.upliftTotal)}</td><td></td></tr>
+                <tr className="muted"><td>{ALL_BLOCK} <small>(service block)</small></td><td className="r">×{fmt.num(calc.upliftTotal)}</td><td></td></tr>
               </tbody>
               <tfoot><tr><td>Total</td><td className="r">{fmt.num(calc.blockEstimationTotal)}</td><td></td></tr></tfoot>
             </table>
-            <button className="add" onClick={() => update((d) => ({ ...d, blocks: [...d.blocks, ""] }))}>＋ Добавить блок</button>
+            <button className="add" onClick={() => update((d) => ({ ...d, blocks: [...d.blocks, ""] }))}>＋ Add block</button>
           </section>
 
           {/* ---------- Phase Estimation + mini Gantt ---------- */}
@@ -390,7 +390,7 @@ export default function App() {
 
         {/* ---------- Phases and roles engagement ---------- */}
         <section className="card">
-          <h2>Phases &amp; roles engagement <small>Engagement в %: 100% = 1 FTE, 200% = 2 FTE</small></h2>
+          <h2>Phases &amp; roles engagement <small>Engagement in %: 100% = 1 FTE, 200% = 2 FTE</small></h2>
           <div className="table-wrap">
             <table className="grid phases aligned">
               <colgroup>
@@ -473,7 +473,7 @@ export default function App() {
                       <td>
                         <select
                           className={a.role && !inTeam ? "chk-bad" : ""}
-                          title={a.role && !inTeam ? "Этой комбинации Role/Grade/Tier нет в Team — трудозатраты не попадут в Work" : undefined}
+                          title={a.role && !inTeam ? "This Role/Grade/Tier combination is not in the Team — its effort is not counted in Work" : undefined}
                           value={linked?.id ?? (a.role ? "__orphan" : "")}
                           onChange={(e) => {
                             const m = completeMembers.find((x) => x.id === e.target.value);
@@ -485,9 +485,9 @@ export default function App() {
                             }));
                           }}
                         >
-                          <option value="">— участник команды —</option>
+                          <option value="">— team member —</option>
                           {completeMembers.map((m) => <option key={m.id} value={m.id}>{memberLabel(m)}</option>)}
-                          {a.role && !linked && <option value="__orphan">⚠ {memberLabel(a)} (нет в Team)</option>}
+                          {a.role && !linked && <option value="__orphan">⚠ {memberLabel(a)} (not in Team)</option>}
                         </select>
                       </td>
                       {PH.map((p) => (
@@ -496,7 +496,7 @@ export default function App() {
                         </td>
                       ))}
                       <td className="r">{fmt.num(calc.allocationAvgFte[i])}</td>
-                      <td><button className="icon-btn danger" title="Удалить" onClick={() => update((d) => ({ ...d, allocations: d.allocations.filter((_, k) => k !== i) }))}>✕</button></td>
+                      <td><button className="icon-btn danger" title="Delete" onClick={() => update((d) => ({ ...d, allocations: d.allocations.filter((_, k) => k !== i) }))}>✕</button></td>
                     </tr>
                   );
                 })}
@@ -510,12 +510,12 @@ export default function App() {
               </tfoot>
             </table>
           </div>
-          <button className="add" onClick={() => update((d) => ({ ...d, allocations: [...d.allocations, newAllocation()] }))}>＋ Добавить строку вовлечённости</button>
+          <button className="add" onClick={() => update((d) => ({ ...d, allocations: [...d.allocations, newAllocation()] }))}>＋ Add engagement row</button>
         </section>
 
         {/* ---------- Entry table ---------- */}
         <section className="card">
-          <h2>Service packages <small>Трудозатраты по блокам, m/d</small></h2>
+          <h2>Service packages <small>Effort by block, m/d</small></h2>
           <div className="table-wrap">
             <table className="grid packages aligned">
               <colgroup>
@@ -559,20 +559,20 @@ export default function App() {
                         <td key={j}><NumInput value={p.days[j]} min={0} placeholder="" onChange={(v) => set({ days: p.days.map((x, k) => (k === j ? v : x)) })} /></td>
                       ))}
                       <td className="r">{fmt.num(calc.packageTotals[i])}</td>
-                      <td><button className="icon-btn danger" title="Удалить" onClick={() => update((d) => ({ ...d, packages: d.packages.filter((_, k) => k !== i) }))}>✕</button></td>
+                      <td><button className="icon-btn danger" title="Delete" onClick={() => update((d) => ({ ...d, packages: d.packages.filter((_, k) => k !== i) }))}>✕</button></td>
                     </tr>
                   );
                 })}
               </tbody>
             </table>
           </div>
-          <button className="add" onClick={() => update((d) => ({ ...d, packages: [...d.packages, newPackage()] }))}>＋ Добавить пакет</button>
+          <button className="add" onClick={() => update((d) => ({ ...d, packages: [...d.packages, newPackage()] }))}>＋ Add package</button>
         </section>
 
         <div className="grid-two">
           <section className="card">
             <h2>Assumptions</h2>
-            {data.assumptions.length === 0 && <div className="muted">Допущений пока нет.</div>}
+            {data.assumptions.length === 0 && <div className="muted">No assumptions yet.</div>}
             <ol className="assumptions">
               {data.assumptions.map((a, i) => (
                 <li key={a.id}>
@@ -581,14 +581,14 @@ export default function App() {
                 </li>
               ))}
             </ol>
-            <button className="add" onClick={() => update((d) => ({ ...d, assumptions: [...d.assumptions, { id: uid(), text: "" }] }))}>＋ Добавить допущение</button>
+            <button className="add" onClick={() => update((d) => ({ ...d, assumptions: [...d.assumptions, { id: uid(), text: "" }] }))}>＋ Add assumption</button>
           </section>
           <section className="card">
             <h2>
-              Holidays <small>Пропускаются при расчёте дат фаз (WORKDAY)</small>
+              Holidays <small>Skipped when calculating phase dates (WORKDAY)</small>
               {catalog.defaultHolidays.length > 0 && (
                 <button className="link-btn" onClick={() => update((d) => ({ ...d, holidays: [...catalog.defaultHolidays] }))}>
-                  Сбросить на стандартные (США 2027–2028)
+                  Reset to defaults (US 2027–2028)
                 </button>
               )}
             </h2>
@@ -600,20 +600,20 @@ export default function App() {
                 </span>
               ))}
             </div>
-            <button className="add" onClick={() => update((d) => ({ ...d, holidays: [...d.holidays, d.startDate || new Date().toISOString().slice(0, 10)] }))}>＋ Добавить дату</button>
+            <button className="add" onClick={() => update((d) => ({ ...d, holidays: [...d.holidays, d.startDate || new Date().toISOString().slice(0, 10)] }))}>＋ Add date</button>
           </section>
         </div>
 
         <details className="card help">
-          <summary>Как заполнять</summary>
+          <summary>How to fill in</summary>
           <ol>
-            <li><b>Team</b> — выберите Role, Grade и Tier для каждого участника; рейт подставится автоматически.</li>
-            <li><b>Project start date</b> — дата начала только первой фазы.</li>
-            <li><b>Service packages</b> — выберите блок и укажите трудозатраты (m/d) по фазам.</li>
-            <li><b>Amount of working days</b> — длительность каждой фазы в рабочих днях.</li>
-            <li><b>Roles engagement</b> — выберите блок и участника команды, укажите вовлечённость в % по фазам.</li>
-            <li><b>Проверка</b> — «Total efforts amount by Roles» должен совпадать с «by Block»: зелёный — совпадает, красный — расходится.</li>
-            <li><b>Contingency Reserve</b> и <b>Discount %</b>.</li>
+            <li><b>Team</b> — pick Role, Grade and Tier for each team member; the rate fills in automatically.</li>
+            <li><b>Project start date</b> — start date of the FIRST phase only.</li>
+            <li><b>Service packages</b> — pick a block and enter the effort (m/d) per phase.</li>
+            <li><b>Amount of working days</b> — duration of each phase in working days.</li>
+            <li><b>Roles engagement</b> — pick a block and a team member, then enter the engagement % per phase.</li>
+            <li><b>Check</b> — "Total efforts amount by Roles" must equal "by Block": green when they match, red when they differ.</li>
+            <li><b>Contingency Reserve</b> and <b>Discount %</b>.</li>
           </ol>
         </details>
       </main>
@@ -635,19 +635,19 @@ export default function App() {
 
       {showCreate && (
         <div className="modal-backdrop" onMouseDown={(e) => e.target === e.currentTarget && setShowCreate(false)}>
-          <div className="modal small" role="dialog" aria-label="Создать проект">
+          <div className="modal small" role="dialog" aria-label="Create project">
             <div className="modal-head">
-              <h2>Создать проект</h2>
-              <button className="icon-btn" onClick={() => setShowCreate(false)} aria-label="Закрыть">✕</button>
+              <h2>Create project</h2>
+              <button className="icon-btn" onClick={() => setShowCreate(false)} aria-label="Close">✕</button>
             </div>
             <div className="create-options">
               <button onClick={() => createProject("blank")}>
-                <b>Пустой проект</b>
-                <span>Стандартные 5 фаз, пустые таблицы</span>
+                <b>Blank project</b>
+                <span>Standard 5 phases, empty tables</span>
               </button>
               <button onClick={() => createProject("sample")}>
-                <b>Из примера шаблона</b>
-                <span>Данные из Project_Estimation_Template.xlsx</span>
+                <b>From the template example</b>
+                <span>Data from Project_Estimation_Template.xlsx</span>
               </button>
             </div>
           </div>

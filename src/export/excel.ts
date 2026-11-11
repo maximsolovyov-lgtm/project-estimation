@@ -1,4 +1,4 @@
-// "Выгрузить в Excel": rebuilds the Project Estimation sheet with the same layout and live
+// "Export to Excel": rebuilds the Project Estimation sheet with the same layout and live
 // formulas as Project_Estimation_Template.xlsx. The Rate Card is NOT exported: the Rate
 // column holds the rates of the Team members only (as values instead of INDEX/MATCH lookups).
 

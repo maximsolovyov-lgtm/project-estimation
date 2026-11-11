@@ -7,11 +7,11 @@ A web app for building project estimates. It reproduces the logic of `Project_Es
 
 | Button | What it does |
 |---|---|
-| **Создать проект** | New project: blank, or prefilled with the example from the template |
-| **Сохранить проект** | Saves the project to D1 (creates it or updates it) |
-| **Выбрать на редактирование** | List of saved projects with search, open and delete |
-| **Выгрузить в Excel** | `.xlsx` with the same layout and live formulas as the template (WORKDAY, SUMPRODUCT, SUMIF, uplift for "All", conditional formatting for the checks, drop-downs) |
-| **Сформировать презентацию** | `.pptx` with one element per slide: title, Total for the project, Team, Workload, **Gantt chart of the schedule**, Phases, Roles engagement, Block Estimation, Phase Estimation, Service packages, Cost structure, Consistency check, Assumptions |
+| **Create project** | New project: blank, or prefilled with the example from the template |
+| **Save project** | Saves the project to D1 (creates it or updates it) |
+| **Open project** | List of saved projects with search, open and delete |
+| **Export to Excel** | `.xlsx` with the same layout and live formulas as the template (WORKDAY, SUMPRODUCT, SUMIF, uplift for "All", conditional formatting for the checks, drop-downs) |
+| **Generate presentation** | `.pptx` with one element per slide: title, Total for the project, Team, Workload, **Gantt chart of the schedule**, Phases, Roles engagement, Block Estimation, Phase Estimation, Service packages, Cost structure, Consistency check, Assumptions |
 
 ### The Rate Card stays hidden
 * The Rate Card (`worker/rateCard.json`) is bundled **only into the Worker**. It is not in the frontend bundle.
