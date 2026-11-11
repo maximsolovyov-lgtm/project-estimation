@@ -15,6 +15,8 @@ A web app for building project estimates. It reproduces the logic of `Project_Es
 
 ### The Rate Card stays hidden
 * The Rate Card (`worker/rateCard.json`) is bundled **only into the Worker**. It is not in the frontend bundle.
+* Rate Card prices are hourly, estimates are in man-days, so the app uses a **daily rate = hourly rate × 8**
+  (`HOURS_PER_DAY` in `src/shared/types.ts`). The Team table, cost, Blended Rate, Excel and the deck all use it.
 * The browser gets the list of roles and grades without prices (`GET /api/catalog`), plus the rates for the
   Role+Grade+Tier combinations placed in Team (`POST /api/rates`).
 * When a project is saved or loaded, the server recomputes the rates from the Rate Card, so a rate

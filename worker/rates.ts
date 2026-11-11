@@ -1,6 +1,6 @@
 // Rate Card lookup — server-side only.
 import rateCard from "./rateCard.json";
-import type { Catalog, RateQuery } from "../src/shared/types";
+import { HOURS_PER_DAY, type Catalog, type RateQuery } from "../src/shared/types";
 import { DEFAULT_HOLIDAYS } from "../src/shared/holidays";
 
 interface RateRow {
@@ -14,13 +14,21 @@ const ROWS = rateCard.rows as RateRow[];
 const TIERS = rateCard.tiers as string[];
 const norm = (s: string) => (s ?? "").trim().toLowerCase();
 
-/** Project Estimation!L4: INDEX(Fix-Price, MATCH(role & grade), MATCH(tier)); 0 when missing (IFERROR → 0). */
-export function lookupRate(q: RateQuery): number {
+/** Hourly rate from the Rate Card: INDEX(Fix-Price, MATCH(role & grade), MATCH(tier)); 0 when missing. */
+export function lookupHourlyRate(q: RateQuery): number {
   if (!q.role || !q.grade || !q.tier) return 0;
   const row = ROWS.find((r) => norm(r.role) === norm(q.role) && norm(r.grade) === norm(q.grade));
   const ti = TIERS.findIndex((t) => norm(t) === norm(q.tier));
   if (!row || ti < 0) return 0;
   return row.rates[ti] ?? 0;
+}
+
+/**
+ * Daily rate (USD per man-day) used everywhere in the estimate: hourly Rate Card price x 8.
+ * Estimates are in man-days, so cost = daily rate x man-days.
+ */
+export function lookupRate(q: RateQuery): number {
+  return Math.round(lookupHourlyRate(q) * HOURS_PER_DAY * 100) / 100;
 }
 
 export function buildCatalog(): Catalog {

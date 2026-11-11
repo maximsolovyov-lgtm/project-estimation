@@ -166,7 +166,7 @@ export function buildWorkbook(p: ProjectData, c: CalcResult): ExcelJS.Workbook {
   lbl(9, "Project Cost"); f("F9", `SUMPRODUCT($N$${teamA}:$N$${teamZ},$L$${teamA}:$L$${teamZ})*(100%+F6)`, c.projectCost); cell("G9").value = "USD";
   lbl(10, "Discount %"); input("F10", p.discount); cell("G10").value = "%";
   lbl(11, "Discount*"); f("F11", "F9*F10", c.discountAmount); cell("G11").value = "USD";
-  lbl(12, "Blended Rate"); f("F12", "F14/F7", c.blendedRate); cell("G12").value = "USD";
+  lbl(12, "Blended Rate"); f("F12", "F14/F7", c.blendedRate); cell("G12").value = "USD/day";
   lbl(13, "Project Duration"); f("F13", `($${TC}$${rEnd}-$${TC}$${rStart})/30`, c.durationMonths); cell("G13").value = "Months";
   lbl(14, "Project Cost after Discount", true); f("F14", "F9-F11", c.costAfterDiscount); cell("G14").value = "USD";
   cell("F7").font = { bold: true };
@@ -179,7 +179,7 @@ export function buildWorkbook(p: ProjectData, c: CalcResult): ExcelJS.Workbook {
 
   // ---------------- Team (H3:N14) ----------------
   vertical(`H3:H${tot}`, "Team");
-  ["Role", "Grade", "Tier", "Rate (USD)", "%", "Work"].forEach((t, i) => head(`${"IJKLMN"[i]}3`, t));
+  ["Role", "Grade", "Tier", "Rate (USD/day)", "%", "Work"].forEach((t, i) => head(`${"IJKLMN"[i]}3`, t));
   const cAllocRole = `$C$${a1}:$C$${a2}`;
   const cAllocGrade = `$G$${a1}:$G$${a2}`;
   const cAllocTier = `$H$${a1}:$H$${a2}`;
@@ -395,7 +395,7 @@ export function buildWorkbook(p: ProjectData, c: CalcResult): ExcelJS.Workbook {
     x.fill = { type: "pattern", pattern: "solid", fgColor: { argb: fill } };
   };
   note(`${P}${rStart}:${Q}${pkT - 1}`,
-    "HOW TO USE\n\nBlue text = fill in manually.\nBlack text = calculated, do not overwrite.\n\nFILL IN:\n1. Team - Role, Grade and Tier for each team member (Rate was taken from the Rate Card, Fix-Price / A-la-Carte, when the estimate was exported).\n2. Contingency Reserve (m/h).\n3. Discount %.\n4. Phases - start date of the FIRST phase only, plus the number of working days for each phase.\n5. Allocation grid - pick Block, then Role, Grade and Tier (only Team members are offered), then enter the engagement % per phase (100% = 1 FTE, 200% = 2 FTE).\n6. Entry table (bottom) - pick Block, enter Package ID, package name and hours per phase.",
+    "HOW TO USE\n\nBlue text = fill in manually.\nBlack text = calculated, do not overwrite.\n\nFILL IN:\n1. Team - Role, Grade and Tier for each team member (Rate = daily rate: hourly Rate Card price, Fix-Price / A-la-Carte, x 8 h, taken when the estimate was exported).\n2. Contingency Reserve (m/h).\n3. Discount %.\n4. Phases - start date of the FIRST phase only, plus the number of working days for each phase.\n5. Allocation grid - pick Block, then Role, Grade and Tier (only Team members are offered), then enter the engagement % per phase (100% = 1 FTE, 200% = 2 FTE).\n6. Entry table (bottom) - pick Block, enter Package ID, package name and hours per phase.",
     "FFEAF1FB");
   note(`${S}${rStart}:${V}${pkT - 1}`,
     "CALCULATED AUTOMATICALLY\n\n- Phase End Date, and the start date of every phase after the first (weekends and the dates on the Holidays tab are skipped).\n- FTE, total - sum of the engagement entered for that phase.\n- Total efforts amount by Roles = engagement x working days.\n- Total efforts amount by Block = sum of the entry table.\n- Workload of specialists - effort per role and its % share.\n- Block Estimation and Phase Estimation.\n- Total for the project - Work, Total, Project Cost, Discount, Project Cost after Discount, Project Duration.",

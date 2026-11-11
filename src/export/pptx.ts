@@ -115,7 +115,7 @@ export function buildDeck(p: ProjectData, c: CalcResult): PptxGenJS {
       [cellT("Project Cost"), num(fmt.usd(c.projectCost)), cellT("USD")],
       [cellT("Discount %"), num(fmt.pct(c.discountPct)), cellT("%")],
       [cellT("Discount"), num(fmt.usd(c.discountAmount)), cellT("USD")],
-      [cellT("Blended Rate"), num(fmt.usd(c.blendedRate)), cellT("USD")],
+      [cellT("Blended Rate"), num(fmt.usd(c.blendedRate)), cellT("USD/day")],
       [cellT("Project Duration"), num(fmt.num(c.durationMonths)), cellT("Months")],
       [cellT("Project Cost after Discount", totalRow()), num(fmt.usd(c.costAfterDiscount), totalRow()), cellT("USD", totalRow())],
     ];
@@ -125,8 +125,8 @@ export function buildDeck(p: ProjectData, c: CalcResult): PptxGenJS {
 
   // ---------- 3. Team ----------
   {
-    const s = content("Team", "Roles, grades, tiers and rates (Fix-Price / A-la-Carte)");
-    const rows: Row[] = [[hdr("Role"), hdr("Grade"), hdr("Tier"), hdr("Rate (USD)", "right"), hdr("%", "right"), hdr("Work, m/d", "right")]];
+    const s = content("Team", "Roles, grades, tiers and daily rates (Fix-Price / A-la-Carte hourly rate × 8 h)");
+    const rows: Row[] = [[hdr("Role"), hdr("Grade"), hdr("Tier"), hdr("Rate (USD/day)", "right"), hdr("%", "right"), hdr("Work, m/d", "right")]];
     teamOk.forEach(({ m, r }) => rows.push([cellT(m.role), cellT(m.grade), cellT(m.tier), num(fmt.num(m.rate)), num(fmt.pct(r.share)), num(fmt.num(r.work))]));
     rows.push([cellT("Total", totalRow({ colspan: 4 }) as PptxGenJS.TableCellProps), num(fmt.pct(c.teamShareTotal), totalRow()), num(fmt.num(c.teamWorkTotal), totalRow({ color: checkColor(c.checkTotal) }))]);
     table(s, rows, { x: 0.5, y: 1.4, w: W - 1, colW: [4.8, 1.6, 1.3, 1.6, 1.3, 1.73], rowH: Math.min(0.42, 5.3 / rows.length), fontSize: rows.length > 14 ? 9 : 11 });
@@ -328,7 +328,7 @@ export function buildDeck(p: ProjectData, c: CalcResult): PptxGenJS {
       [cellT("Project Cost"), num(fmt.usd(c.projectCost))],
       [cellT(`Discount (${fmt.pct(c.discountPct)})`), num(`−${fmt.usd(c.discountAmount)}`, { color: BAD })],
       [cellT("Project Cost after Discount", totalRow()), num(fmt.usd(c.costAfterDiscount), totalRow())],
-      [cellT("Blended Rate"), num(fmt.usd(c.blendedRate))],
+      [cellT("Blended Rate, per day"), num(fmt.usd(c.blendedRate))],
     ];
     table(s, rows, { x: 8.7, y: 1.5, w: 4.13, colW: [2.53, 1.6], rowH: 0.45 });
   }

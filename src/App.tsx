@@ -295,7 +295,7 @@ export default function App() {
                   <td className="u">%</td>
                 </tr>
                 <tr><td>Discount</td><td className="v">{fmt.usd(calc.discountAmount)}</td><td className="u">USD</td></tr>
-                <tr><td>Blended Rate</td><td className="v">{fmt.usd(calc.blendedRate)}</td><td className="u">USD</td></tr>
+                <tr><td>Blended Rate</td><td className="v">{fmt.usd(calc.blendedRate)}</td><td className="u">USD/day</td></tr>
                 <tr><td>Project Duration</td><td className="v">{fmt.num(calc.durationMonths)}</td><td className="u">Months</td></tr>
                 <tr className="strong total"><td>Project Cost after Discount</td><td className="v">{fmt.usd(calc.costAfterDiscount)}</td><td className="u">USD</td></tr>
               </tbody>
@@ -305,12 +305,12 @@ export default function App() {
           {/* ---------- Team ---------- */}
           <section className="card">
             <h2>
-              Team <small>Rate is taken from the Rate Card (Fix-Price / A-la-Carte) for the selected roles only</small>
+              Team <small>Daily rate = hourly Rate Card price (Fix-Price / A-la-Carte) × 8 h, for the selected roles only</small>
             </h2>
             <div className="table-wrap">
               <table className="grid">
                 <thead>
-                  <tr><th>Role</th><th>Grade</th><th>Tier</th><th className="r">Rate (USD)</th><th className="r">%</th><th className="r">Work</th><th></th></tr>
+                  <tr><th>Role</th><th>Grade</th><th>Tier</th><th className="r">Rate (USD/day)</th><th className="r">%</th><th className="r">Work</th><th></th></tr>
                 </thead>
                 <tbody>
                   {data.team.map((m, i) => (

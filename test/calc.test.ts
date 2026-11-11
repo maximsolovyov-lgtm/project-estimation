@@ -14,7 +14,8 @@ function sample() {
 
 describe("rate card lookup (Project Estimation!L4:L13)", () => {
   it("matches the template rates", () => {
-    expect(sample().team.map((m) => m.rate)).toEqual([140.1, 100, 125.1, 66.3, 68.9, 51.4, 76.9, 42.4, 95.1, 92.7]);
+    // daily rate = hourly rate from the template x 8
+    expect(sample().team.map((m) => m.rate)).toEqual([140.1, 100, 125.1, 66.3, 68.9, 51.4, 76.9, 42.4, 95.1, 92.7].map((r) => Math.round(r * 800) / 100));
   });
   it("returns 0 for missing combinations", () => {
     expect(lookupRate({ role: "Security Engineer", grade: "Lead", tier: "Tier 1" })).toBe(0);
@@ -52,10 +53,11 @@ describe("calculate() reproduces the template", () => {
     expect(c.workRoles).toBeCloseTo(267);
     expect(c.contingencyPct).toBeCloseTo(0.011111111111111112);
     expect(c.totalWork).toBeCloseTo(270);
-    expect(c.projectCost).toBeCloseTo(23554.237777777773, 6);
-    expect(c.discountAmount).toBeCloseTo(2355.4237777777776, 6);
-    expect(c.costAfterDiscount).toBeCloseTo(21198.813999999995, 6);
-    expect(c.blendedRate).toBeCloseTo(78.51412592592591, 6);
+    // template (hourly-rate) values x 8
+    expect(c.projectCost).toBeCloseTo(23554.237777777773 * 8, 5);
+    expect(c.discountAmount).toBeCloseTo(2355.4237777777776 * 8, 5);
+    expect(c.costAfterDiscount).toBeCloseTo(21198.813999999995 * 8, 5);
+    expect(c.blendedRate).toBeCloseTo(78.51412592592591 * 8, 5);
     expect(c.durationMonths).toBeCloseTo(3.2333333333333334, 6);
   });
   it("block / phase estimation", () => {

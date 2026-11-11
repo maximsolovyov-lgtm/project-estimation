@@ -21,7 +21,7 @@ describe("exports", () => {
     expect(wb.worksheets.map((w) => w.name)).toEqual(["Project Estimation", "Holidays", "Assumptions"]);
     const ws = wb.getWorksheet("Project Estimation")!;
     expect(ws.getCell("F14").formula).toBe("F9-F11");
-    expect(ws.getCell("L4").value).toBe(140.1);
+    expect(ws.getCell("L4").value).toBe(1120.8); // 140.1 per hour x 8
     const buf = await wb.xlsx.writeBuffer();
     expect(buf.byteLength).toBeGreaterThan(5000);
     if (out) writeFileSync(join(out, "sample.xlsx"), Buffer.from(buf as ArrayBuffer));

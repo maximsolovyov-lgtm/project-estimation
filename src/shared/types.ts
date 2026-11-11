@@ -5,6 +5,8 @@
 export const DEFAULT_PHASE_COUNT = 5;
 export const MIN_PHASES = 1;
 export const MAX_PHASES = 12;
+/** Rate Card prices are hourly; estimates are in man-days. Daily rate = hourly rate x 8. */
+export const HOURS_PER_DAY = 8;
 export const ALL_BLOCK = "All";
 export const TIERS = ["Tier 1", "Tier 2", "Tier 3", "Tier 4", "Tier 5"] as const;
 
