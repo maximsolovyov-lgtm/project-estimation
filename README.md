@@ -50,23 +50,17 @@ npm test
 
 ## Deploying to Cloudflare
 
-```bash
-npx wrangler login
-```
+**Live URL: https://project-estimation.maxim-solovyov.workers.dev**
 
-```bash
-npx wrangler d1 create project-estimation
-```
-
-Copy the `database_id` it prints into `wrangler.jsonc`, then run:
-
-```bash
-npm run db:migrate:remote
-```
+The account, D1 database (`project-estimation`) and its id are already set in `wrangler.jsonc`, and the migration has been applied.
+To deploy again:
 
 ```bash
 npm run deploy
 ```
+
+`npm run build` builds the frontend and embeds it into the Worker (`worker/assets.generated.ts`), so a deploy is
+a single script upload with no separate Static Assets upload. For a new schema migration: `npm run db:migrate:remote`.
 
 The app has no built-in authentication. To restrict access, turn on Cloudflare Access (Zero Trust) for the Worker's domain.
 

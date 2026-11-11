@@ -1,20 +1,14 @@
 {
   "$schema": "node_modules/wrangler/config-schema.json",
   "name": "project-estimation",
+  "account_id": "762979fbfbb12b2b4e3504a559bbb4d9",
   "main": "worker/index.ts",
   "compatibility_date": "2026-10-01",
-  "assets": {
-    "directory": "./dist",
-    "binding": "ASSETS",
-    "not_found_handling": "single-page-application",
-    "run_worker_first": ["/api/*"]
-  },
   "d1_databases": [
     {
       "binding": "DB",
       "database_name": "project-estimation",
-      // Replace with the id printed by `npx wrangler d1 create project-estimation`
-      "database_id": "00000000-0000-0000-0000-000000000000",
+      "database_id": "ca2bad0e-e496-405b-9b34-44925100a24d",
       "migrations_dir": "migrations"
     }
   ],

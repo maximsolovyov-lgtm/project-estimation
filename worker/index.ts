@@ -3,11 +3,11 @@
 // and the rates of the exact Role+Grade+Tier combinations placed in the Team.
 
 import { buildCatalog, lookupRate } from "./rates";
+import { ASSETS } from "./assets.generated";
 import type { ProjectData, ProjectSummary, RateQuery, StoredProject } from "../src/shared/types";
 
 interface Env {
   DB: D1Database;
-  ASSETS: Fetcher;
 }
 
 const CATALOG = buildCatalog();
@@ -104,6 +104,21 @@ async function api(req: Request, env: Env, url: URL): Promise<Response> {
   return error(404, "Not found");
 }
 
+/** Serves the embedded SPA; unknown paths fall back to index.html (client-side routing). */
+function serveAsset(pathname: string): Response {
+  const hit = ASSETS[pathname];
+  const file = hit ?? ASSETS["/index.html"];
+  if (!file) return new Response("Frontend not built", { status: 500 });
+  const immutable = !!hit && pathname.startsWith("/assets/");
+  return new Response(file.body, {
+    headers: {
+      "content-type": file.type,
+      "cache-control": immutable ? "public, max-age=31536000, immutable" : "no-cache",
+      "x-content-type-options": "nosniff",
+    },
+  });
+}
+
 export default {
   async fetch(req: Request, env: Env): Promise<Response> {
     const url = new URL(req.url);
@@ -115,6 +130,6 @@ export default {
         return error(500, e instanceof Error ? e.message : "Internal error");
       }
     }
-    return env.ASSETS.fetch(req);
+    return serveAsset(url.pathname);
   },
 } satisfies ExportedHandler<Env>;
