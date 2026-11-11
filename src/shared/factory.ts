@@ -1,4 +1,4 @@
-import { PHASE_COUNT, type Allocation, type ProjectData, type TeamMember, type WorkPackage } from "./types";
+import { DEFAULT_PHASE_COUNT, type Allocation, type ProjectData, type TeamMember, type WorkPackage } from "./types";
 
 export const DEFAULT_PHASES = [
   "Discovery & Design",
@@ -12,20 +12,20 @@ export function uid(): string {
   return Math.random().toString(36).slice(2, 10) + Date.now().toString(36).slice(-4);
 }
 
-export function emptyPhaseArray(): number[] {
-  return Array(PHASE_COUNT).fill(0);
+export function emptyPhaseArray(n: number = DEFAULT_PHASE_COUNT): number[] {
+  return Array(n).fill(0);
 }
 
 export function newTeamMember(): TeamMember {
   return { id: uid(), role: "", grade: "", tier: "", rate: 0 };
 }
 
-export function newAllocation(): Allocation {
-  return { id: uid(), block: "", role: "", grade: "", tier: "", fte: emptyPhaseArray() };
+export function newAllocation(phases: number = DEFAULT_PHASE_COUNT): Allocation {
+  return { id: uid(), block: "", role: "", grade: "", tier: "", fte: emptyPhaseArray(phases) };
 }
 
-export function newPackage(): WorkPackage {
-  return { id: uid(), block: "", packageId: "", name: "", days: emptyPhaseArray() };
+export function newPackage(phases: number = DEFAULT_PHASE_COUNT): WorkPackage {
+  return { id: uid(), block: "", packageId: "", name: "", days: emptyPhaseArray(phases) };
 }
 
 function todayIso(): string {

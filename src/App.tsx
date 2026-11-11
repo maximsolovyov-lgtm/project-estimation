@@ -1,3 +1,4 @@
+import type React from "react";
 import { useCallback, useEffect, useMemo, useRef, useState } from "react";
 import { api } from "./api";
 import { NumInput } from "./components/NumInput";
@@ -7,10 +8,10 @@ import { fmtDate } from "./shared/dates";
 import { blankProject, newAllocation, newPackage, newTeamMember, sampleProject, uid } from "./shared/factory";
 import { fmt } from "./format";
 import { holidayName } from "./shared/holidays";
-import { ALL_BLOCK, PHASE_COUNT, type Catalog, type ProjectData, type TeamMember } from "./shared/types";
+import { addPhase, movePhase, normalizePhases, phaseHasData, removePhase, resetPhases } from "./shared/phases";
+import { ALL_BLOCK, DEFAULT_PHASE_COUNT, MAX_PHASES, MIN_PHASES, type Catalog, type ProjectData, type TeamMember } from "./shared/types";
 
 type Toast = { kind: "ok" | "bad" | "info"; text: string } | null;
-const PH = Array.from({ length: PHASE_COUNT }, (_, i) => i);
 const memberLabel = (m: { role: string; grade: string; tier: string }) => `${m.role} · ${m.grade} · ${m.tier}`;
 const sameCombo = (a: { role: string; grade: string; tier: string }, b: { role: string; grade: string; tier: string }) =>
   a.role.trim().toLowerCase() === b.role.trim().toLowerCase() &&
@@ -43,7 +44,7 @@ export default function App() {
         const last = localStorage.getItem("pe:lastProject");
         if (last) {
           api.get(last).then((p) => {
-            setData(p.data);
+            setData(normalizePhases(p.data));
             setProjectId(p.id);
           }).catch(() => setData(blankProject(c.defaultHolidays)));
         } else setData(blankProject(c.defaultHolidays));
@@ -115,7 +116,7 @@ export default function App() {
     try {
       const saved = projectId ? await api.update(projectId, data) : await api.create(data);
       setProjectId(saved.id);
-      setData(saved.data);
+      setData(normalizePhases(saved.data));
       setDirty(false);
       localStorage.setItem("pe:lastProject", saved.id);
       notify({ kind: "ok", text: "Project saved" });
@@ -131,7 +132,7 @@ export default function App() {
     setBusy("open");
     try {
       const p = await api.get(id);
-      setData(p.data);
+      setData(normalizePhases(p.data));
       setProjectId(p.id);
       setDirty(false);
       setShowOpen(false);
@@ -180,6 +181,16 @@ export default function App() {
   }
 
   // ---------- editors ----------
+  const PH = data.phases.map((_, i) => i);
+  // both aligned tables get the same width so their phase columns line up
+  const phW = PH.length <= 5 ? 122 : PH.length <= 7 ? 104 : 96;
+  const alignedStyle = { minWidth: 470 + phW * PH.length + 128, "--phw": `${phW}px` } as React.CSSProperties;
+
+  function deletePhase(i: number) {
+    const name = data!.phases[i].name || `Phase ${i + 1}`;
+    if (phaseHasData(data!, i) && !confirm(`Phase "${name}" has engagement or man-days entered. Delete it with its data?`)) return;
+    update((d) => removePhase(d, i));
+  }
   const blocks = data.blocks.filter((b) => b.trim());
   const blockOptions = [...blocks, ALL_BLOCK];
   const gradesFor = (role: string) => catalog.roles.find((r) => r.role === role)?.grades ?? [];
@@ -388,11 +399,83 @@ export default function App() {
           </section>
         </div>
 
+        {/* ---------- Phase management ---------- */}
+        <section className="card">
+          <h2>
+            Phases <small>{data.phases.length} of max {MAX_PHASES} · a new project always starts with {DEFAULT_PHASE_COUNT} standard phases</small>
+            <button
+              className="link-btn"
+              onClick={() => {
+                const standard = data.phases.length === DEFAULT_PHASE_COUNT && blankProject().phases.every((p, i) => p.name === data.phases[i].name);
+                if (standard) return;
+                if (confirm(`Reset to the ${DEFAULT_PHASE_COUNT} standard phases? Phases after the ${DEFAULT_PHASE_COUNT}th and their data will be removed; names are reset, working days are kept.`)) update(resetPhases);
+              }}
+            >
+              Reset to {DEFAULT_PHASE_COUNT} standard phases
+            </button>
+          </h2>
+          <div className="table-wrap">
+            <table className="grid phase-mgr">
+              <thead>
+                <tr>
+                  <th style={{ width: 36 }}>#</th>
+                  <th>Phase name</th>
+                  <th className="r" style={{ width: 120 }}>Working days</th>
+                  <th style={{ width: 110 }}>Start</th>
+                  <th style={{ width: 110 }}>End</th>
+                  <th className="r" style={{ width: 90 }}>FTE</th>
+                  <th className="r" style={{ width: 110 }}>By Roles, m/d</th>
+                  <th className="r" style={{ width: 110 }}>By Block, m/d</th>
+                  <th style={{ width: 150 }}></th>
+                </tr>
+              </thead>
+              <tbody>
+                {data.phases.map((ph, i) => (
+                  <tr key={i}>
+                    <td><span className={`ph-dot c${i % 8}`}>{i + 1}</span></td>
+                    <td>
+                      <input value={ph.name} onChange={(e) => update((d) => ({ ...d, phases: d.phases.map((p, k) => (k === i ? { ...p, name: e.target.value } : p)) }))} />
+                    </td>
+                    <td>
+                      <NumInput value={ph.workingDays} min={0} onChange={(v) => update((d) => ({ ...d, phases: d.phases.map((p, k) => (k === i ? { ...p, workingDays: Math.round(v) } : p)) }))} />
+                    </td>
+                    <td>{i === 0 ? <input type="date" value={data.startDate} onChange={(e) => update((d) => ({ ...d, startDate: e.target.value }))} /> : fmtDate(calc.phaseStart[i])}</td>
+                    <td>{fmtDate(calc.phaseEnd[i])}</td>
+                    <td className="r">{fmt.num(calc.fteByPhase[i])}</td>
+                    <td className={`r ${chk(calc.checkPhases[i])}`}>{fmt.num(calc.effortByRoles[i])}</td>
+                    <td className={`r ${chk(calc.checkPhases[i])}`}>{fmt.num(calc.effortByBlock[i])}</td>
+                    <td className="ph-actions">
+                      <button className="icon-btn" title="Move up" disabled={i === 0} onClick={() => update((d) => movePhase(d, i, -1))}>▲</button>
+                      <button className="icon-btn" title="Move down" disabled={i === data.phases.length - 1} onClick={() => update((d) => movePhase(d, i, 1))}>▼</button>
+                      <button className="icon-btn" title="Insert a phase after this one" disabled={data.phases.length >= MAX_PHASES} onClick={() => update((d) => addPhase(d, i + 1))}>＋</button>
+                      <button className="icon-btn danger" title="Delete phase" disabled={data.phases.length <= MIN_PHASES} onClick={() => deletePhase(i)}>✕</button>
+                    </td>
+                  </tr>
+                ))}
+              </tbody>
+              <tfoot>
+                <tr>
+                  <td></td>
+                  <td>Total</td>
+                  <td className="r">{fmt.int(calc.totalWorkingDays)}</td>
+                  <td>{fmtDate(calc.projectStart)}</td>
+                  <td>{fmtDate(calc.projectEnd)}</td>
+                  <td className="r">{fmt.num(calc.fteTotal)}</td>
+                  <td className={`r ${chk(calc.checkPhasesTotal)}`}>{fmt.num(calc.effortByRolesTotal)}</td>
+                  <td className={`r ${chk(calc.checkTotal)}`}>{fmt.num(calc.effortByBlockTotal)}</td>
+                  <td></td>
+                </tr>
+              </tfoot>
+            </table>
+          </div>
+          <button className="add" disabled={data.phases.length >= MAX_PHASES} onClick={() => update((d) => addPhase(d))}>＋ Add phase</button>
+        </section>
+
         {/* ---------- Phases and roles engagement ---------- */}
         <section className="card">
           <h2>Phases &amp; roles engagement <small>Engagement in %: 100% = 1 FTE, 200% = 2 FTE</small></h2>
           <div className="table-wrap">
-            <table className="grid phases aligned">
+            <table className="grid phases aligned" style={alignedStyle}>
               <colgroup>
                 <col className="block-col" />
                 <col />
@@ -510,14 +593,14 @@ export default function App() {
               </tfoot>
             </table>
           </div>
-          <button className="add" onClick={() => update((d) => ({ ...d, allocations: [...d.allocations, newAllocation()] }))}>＋ Add engagement row</button>
+          <button className="add" onClick={() => update((d) => ({ ...d, allocations: [...d.allocations, newAllocation(d.phases.length)] }))}>＋ Add engagement row</button>
         </section>
 
         {/* ---------- Entry table ---------- */}
         <section className="card">
           <h2>Service packages <small>Effort by block, m/d</small></h2>
           <div className="table-wrap">
-            <table className="grid packages aligned">
+            <table className="grid packages aligned" style={alignedStyle}>
               <colgroup>
                 <col className="block-col" />
                 <col className="id-col" />
@@ -566,7 +649,7 @@ export default function App() {
               </tbody>
             </table>
           </div>
-          <button className="add" onClick={() => update((d) => ({ ...d, packages: [...d.packages, newPackage()] }))}>＋ Add package</button>
+          <button className="add" onClick={() => update((d) => ({ ...d, packages: [...d.packages, newPackage(d.phases.length)] }))}>＋ Add package</button>
         </section>
 
         <div className="grid-two">
@@ -665,7 +748,7 @@ function MiniGantt({ data, calc }: { data: ProjectData; calc: ReturnType<typeof 
   const span = s1 - s0 + 1;
   return (
     <div className="gantt" aria-label="Project schedule">
-      {PH.map((i) => {
+      {data.phases.map((_, i) => {
         const a = toDay(calc.phaseStart[i]);
         const b = toDay(calc.phaseEnd[i]);
         return (
@@ -674,7 +757,7 @@ function MiniGantt({ data, calc }: { data: ProjectData; calc: ReturnType<typeof 
             <div className="g-track">
               {a !== null && b !== null && (
                 <div
-                  className={`g-bar c${i}`}
+                  className={`g-bar c${i % 8}`}
                   style={{ left: `${((a - s0) / span) * 100}%`, width: `${((b - a + 1) / span) * 100}%` }}
                   title={`${fmtDate(calc.phaseStart[i])} – ${fmtDate(calc.phaseEnd[i])}`}
                 />

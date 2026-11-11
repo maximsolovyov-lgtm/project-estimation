@@ -2,7 +2,7 @@
 // Excel cell references are given next to every value.
 
 import { dayToIso, isoToDay, workday } from "./dates";
-import { ALL_BLOCK, PHASE_COUNT, type ProjectData } from "./types";
+import { ALL_BLOCK, type ProjectData } from "./types";
 
 export type CheckState = "ok" | "bad" | "none";
 
@@ -65,7 +65,7 @@ export function check(a: number, b: number, digits = 1, zeroSide: "b" | "a" = "b
 }
 
 export function calculate(p: ProjectData): CalcResult {
-  const P = PHASE_COUNT;
+  const P = p.phases.length;
   const days = Array.from({ length: P }, (_, i) => n(p.phases[i]?.workingDays));
   const hol = new Set(p.holidays.map(isoToDay).filter((d): d is number => d !== null));
 
@@ -156,7 +156,7 @@ export function calculate(p: ProjectData): CalcResult {
 
   // Phase Estimation S3:V7 = SUM of each phase column of the entry table.
   // (The template has V6/V7 cross-wired to M/L; here every phase gets its own column.)
-  const phaseEstimation = p.phases.slice(0, P).map((ph, i) => ({ phase: ph.name, value: effortByBlock[i] }));
+  const phaseEstimation = p.phases.map((ph, i) => ({ phase: ph.name, value: effortByBlock[i] }));
   const phaseEstimationTotal = phaseEstimation.reduce((s, x) => s + x.value, 0);
 
   return {

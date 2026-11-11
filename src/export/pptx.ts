@@ -3,7 +3,7 @@
 import PptxGenJS from "pptxgenjs";
 import type { CalcResult, CheckState } from "../shared/calc";
 import { fmtDate, isoToDay, dayToIso } from "../shared/dates";
-import { PHASE_COUNT, type ProjectData } from "../shared/types";
+import type { ProjectData } from "../shared/types";
 import { fmt, safeFileName } from "../format";
 
 const BRAND = "1F4E79";
@@ -13,7 +13,8 @@ const MUTED = "6B7785";
 const LINE = "D9E1EA";
 const OK = "138A36";
 const BAD = "C62828";
-const PHASE_COLORS = ["2E75B6", "F0A030", "4CAF7A", "8E6FC8", "E0607E"];
+const PHASE_COLORS = ["2E75B6", "F0A030", "4CAF7A", "8E6FC8", "E0607E", "26A6A6", "A3794C", "5C6BC0"];
+const pc = (i: number) => PHASE_COLORS[i % PHASE_COLORS.length];
 const SERIES = ["2E75B6", "F0A030", "4CAF7A", "8E6FC8", "E0607E", "26A6A6", "A3794C", "5C6BC0", "D4A017", "7D8C99"];
 const W = 13.333;
 const H = 7.5;
@@ -61,7 +62,8 @@ export function buildDeck(p: ProjectData, c: CalcResult): PptxGenJS {
   const table = (s: Slide, rows: Row[], o: PptxGenJS.TableProps) =>
     s.addTable(rows, { fontFace: FONT, border: { type: "solid", pt: 0.5, color: LINE }, valign: "middle", ...o });
 
-  const phases = p.phases.slice(0, PHASE_COUNT);
+  const phases = p.phases;
+  const nP = phases.length;
   const teamOk = p.team.map((m, i) => ({ m, r: c.team[i] })).filter((x) => x.m.role && x.m.grade && x.m.tier);
 
   // ---------- 1. Title ----------
@@ -161,13 +163,13 @@ export function buildDeck(p: ProjectData, c: CalcResult): PptxGenJS {
       const gx = 0.5 + labelW;
       const gw = W - 0.5 - gx;
       const gy = 1.95;
-      const rowH = 0.78;
+      const rowH = Math.min(0.78, 4.4 / nP);
       const span = d1 - d0 + 1;
       const xOf = (day: number) => gx + ((day - d0) / span) * gw;
       // month grid
       const first = new Date(dayToIso(d0) + "T00:00:00Z");
       let m = new Date(Date.UTC(first.getUTCFullYear(), first.getUTCMonth(), 1));
-      const gh = rowH * PHASE_COUNT;
+      const gh = rowH * nP;
       while (m.getTime() / 86_400_000 <= d1) {
         const md = Math.round(m.getTime() / 86_400_000);
         const next = new Date(Date.UTC(m.getUTCFullYear(), m.getUTCMonth() + 1, 1));
@@ -185,25 +187,25 @@ export function buildDeck(p: ProjectData, c: CalcResult): PptxGenJS {
         s.addShape(pptx.ShapeType.line, { x, y: gy, w: 0, h: gh, line: { color: LINE, width: 0.75, dashType: "dash" } });
         m = next;
       }
-      for (let i = 0; i < PHASE_COUNT; i++) {
+      for (let i = 0; i < nP; i++) {
         const y = gy + i * rowH;
         if (i % 2 === 0) s.addShape(pptx.ShapeType.rect, { x: 0.5, y, w: W - 1, h: rowH, fill: { color: "F8FAFC" }, line: { color: "F8FAFC" } });
         s.addText([
-          { text: phases[i].name, options: { bold: true, color: INK, fontSize: 12, breakLine: true } },
-          { text: `${phases[i].workingDays} working days · ${fmt.num(c.effortByRoles[i])} m/d`, options: { color: MUTED, fontSize: 9 } },
+          { text: phases[i].name, options: { bold: true, color: INK, fontSize: nP > 7 ? 10 : 12, breakLine: true } },
+          { text: `${phases[i].workingDays} working days · ${fmt.num(c.effortByRoles[i])} m/d`, options: { color: MUTED, fontSize: nP > 7 ? 8 : 9 } },
         ], { x: 0.55, y, w: labelW - 0.1, h: rowH, valign: "middle", fontFace: FONT });
         const a = c.phaseStart[i] ? isoToDay(c.phaseStart[i]!) : null;
         const b = c.phaseEnd[i] ? isoToDay(c.phaseEnd[i]!) : null;
         if (a !== null && b !== null) {
           const x = xOf(a);
           const w = Math.max(0.08, xOf(b + 1) - x);
-          s.addShape(pptx.ShapeType.roundRect, { x, y: y + 0.17, w, h: rowH - 0.34, fill: { color: PHASE_COLORS[i] }, line: { color: PHASE_COLORS[i] }, rectRadius: 0.06 });
+          s.addShape(pptx.ShapeType.roundRect, { x, y: y + rowH * 0.22, w, h: rowH * 0.56, fill: { color: pc(i) }, line: { color: pc(i) }, rectRadius: 0.06 });
           const label = `${fmtDate(c.phaseStart[i])} – ${fmtDate(c.phaseEnd[i])}`;
-          if (w > 2.0) s.addText(label, { x, y: y + 0.17, w, h: rowH - 0.34, fontSize: 10, color: "FFFFFF", bold: true, align: "center", fontFace: FONT });
+          if (w > 2.0) s.addText(label, { x, y: y + rowH * 0.22, w, h: rowH * 0.56, fontSize: 10, color: "FFFFFF", bold: true, align: "center", fontFace: FONT });
           else {
             const outsideX = x + w + 0.05;
             const fitsRight = outsideX + 2.0 <= W - 0.4;
-            s.addText(label, { x: fitsRight ? outsideX : x - 2.05, y: y + 0.17, w: 2.0, h: rowH - 0.34, fontSize: 9, color: INK, align: fitsRight ? "left" : "right", fontFace: FONT });
+            s.addText(label, { x: fitsRight ? outsideX : x - 2.05, y: y + rowH * 0.22, w: 2.0, h: rowH * 0.56, fontSize: 9, color: INK, align: fitsRight ? "left" : "right", fontFace: FONT });
           }
         }
       }
@@ -220,7 +222,7 @@ export function buildDeck(p: ProjectData, c: CalcResult): PptxGenJS {
     const rows: Row[] = [[hdr("Phase"), hdr("Start"), hdr("End"), hdr("Working days", "right"), hdr("FTE, total", "right"), hdr("Efforts by Roles, m/d", "right"), hdr("Efforts by Block, m/d", "right")]];
     phases.forEach((ph, i) =>
       rows.push([
-        cellT(ph.name, { bold: true, color: PHASE_COLORS[i] }), cellT(fmtDate(c.phaseStart[i])), cellT(fmtDate(c.phaseEnd[i])),
+        cellT(ph.name, { bold: true, color: pc(i) }), cellT(fmtDate(c.phaseStart[i])), cellT(fmtDate(c.phaseEnd[i])),
         num(String(ph.workingDays)), num(fmt.num(c.fteByPhase[i])),
         num(fmt.num(c.effortByRoles[i]), { color: checkColor(c.checkPhases[i]), bold: true }), num(fmt.num(c.effortByBlock[i])),
       ]),
@@ -230,8 +232,8 @@ export function buildDeck(p: ProjectData, c: CalcResult): PptxGenJS {
       num(String(c.totalWorkingDays), totalRow()), num(fmt.num(c.fteTotal), totalRow()),
       num(fmt.num(c.effortByRolesTotal), totalRow({ color: checkColor(c.checkPhasesTotal) })), num(fmt.num(c.effortByBlockTotal), totalRow()),
     ]);
-    table(s, rows, { x: 0.5, y: 1.4, w: W - 1, colW: [2.73, 1.3, 1.3, 1.4, 1.3, 2.15, 2.15], rowH: 0.5 });
-    s.addText("Green = efforts by Roles match efforts by Block, red = they differ.", { x: 0.5, y: 5.4, w: W - 1, h: 0.3, fontSize: 10, color: MUTED, italic: true });
+    table(s, rows, { x: 0.5, y: 1.4, w: W - 1, colW: [2.73, 1.3, 1.3, 1.4, 1.3, 2.15, 2.15], rowH: Math.min(0.5, 5.0 / (nP + 2)) });
+    s.addText("Green = efforts by Roles match efforts by Block, red = they differ.", { x: 0.5, y: Math.min(6.55, 1.55 + Math.min(0.5, 5.0 / (nP + 2)) * (nP + 2)), w: W - 1, h: 0.3, fontSize: 10, color: MUTED, italic: true });
   }
 
   // ---------- 7. Roles engagement ----------
@@ -244,7 +246,7 @@ export function buildDeck(p: ProjectData, c: CalcResult): PptxGenJS {
       part.forEach(({ a, avg }) =>
         rows.push([
           cellT(a.block, { fontSize: 10 }), cellT(`${a.role} · ${a.grade} · ${a.tier}`, { fontSize: 10 }),
-          ...a.fte.slice(0, PHASE_COUNT).map((v) => cellT(v ? `${Math.round(v * 100)}%` : "", { align: "center", fontSize: 10, fill: { color: heat(v) }, color: v >= 1 ? "FFFFFF" : INK })),
+          ...a.fte.map((v) => cellT(v ? `${Math.round(v * 100)}%` : "", { align: "center", fontSize: 10, fill: { color: heat(v) }, color: v >= 1 ? "FFFFFF" : INK })),
           num(fmt.num(avg), { fontSize: 10 }),
         ]),
       );
@@ -255,7 +257,7 @@ export function buildDeck(p: ProjectData, c: CalcResult): PptxGenJS {
           num(fmt.num(c.fteTotal), totalRow()),
         ]);
       }
-      table(s, rows, { x: 0.5, y: 1.4, w: W - 1, colW: [1.6, 3.93, 1.2, 1.2, 1.2, 1.2, 1.2, 0.8], rowH: 0.36, fontSize: 10 });
+      table(s, rows, { x: 0.5, y: 1.4, w: W - 1, colW: (() => { const pw = Math.min(1.2, (W - 1 - 1.6 - 0.8 - 2.4) / nP); return [1.6, W - 1 - 1.6 - 0.8 - pw * nP, ...phases.map(() => pw), 0.8]; })(), rowH: 0.36, fontSize: nP > 7 ? 8 : 10 });
     });
   }
 
@@ -280,13 +282,13 @@ export function buildDeck(p: ProjectData, c: CalcResult): PptxGenJS {
     const s = content("Phase Estimation", "Effort per phase from the service packages, m/d");
     const pe = c.phaseEstimation;
     s.addChart(pptx.ChartType.bar, [{ name: "m/d", labels: pe.map((x) => x.phase), values: pe.map((x) => +x.value.toFixed(2)) }], {
-      x: 0.4, y: 1.4, w: 7.4, h: 5.4, barDir: "col", chartColors: PHASE_COLORS, showValue: true,
+      x: 0.4, y: 1.4, w: 7.4, h: 5.4, barDir: "col", chartColors: phases.map((_, i) => pc(i)), showValue: true,
       dataLabelFormatCode: "0.0", dataLabelFontSize: 10, catAxisLabelFontSize: 10, valGridLine: { color: "EEEEEE", size: 0.5 },
     });
     const rows: Row[] = [[hdr("Phase"), hdr("m/d", "right"), hdr("Share", "right")]];
-    pe.forEach((x, i) => rows.push([cellT(x.phase, { color: PHASE_COLORS[i], bold: true }), num(fmt.num(x.value)), num(fmt.pct(c.phaseEstimationTotal ? x.value / c.phaseEstimationTotal : 0))]));
+    pe.forEach((x, i) => rows.push([cellT(x.phase, { color: pc(i), bold: true }), num(fmt.num(x.value)), num(fmt.pct(c.phaseEstimationTotal ? x.value / c.phaseEstimationTotal : 0))]));
     rows.push([cellT("Total", totalRow()), num(fmt.num(c.phaseEstimationTotal), totalRow()), num("100%", totalRow())]);
-    table(s, rows, { x: 8.1, y: 1.5, w: 4.73, colW: [2.53, 1.1, 1.1], rowH: 0.42 });
+    table(s, rows, { x: 8.1, y: 1.5, w: 4.73, colW: [2.53, 1.1, 1.1], rowH: Math.min(0.42, 5.2 / (nP + 2)) });
   }
 
   // ---------- 10. Service packages ----------
@@ -298,7 +300,7 @@ export function buildDeck(p: ProjectData, c: CalcResult): PptxGenJS {
       const s = content(`Service packages${chunks.length > 1 ? ` (${pi + 1}/${chunks.length})` : ""}`, "Efforts by block and phase, m/d");
       const rows: Row[] = [[hdr("Block"), hdr("ID"), hdr("Service package"), ...phases.map((ph) => hdr(ph.name, "right")), hdr("Total", "right")]];
       part.forEach(({ x, t }) =>
-        rows.push([cellT(x.block, { fontSize: 9 }), cellT(x.packageId, { fontSize: 9 }), cellT(x.name, { fontSize: 9 }), ...x.days.slice(0, PHASE_COUNT).map((v) => num(v ? fmt.num(v) : "", { fontSize: 9 })), num(fmt.num(t), { fontSize: 9, bold: true })]),
+        rows.push([cellT(x.block, { fontSize: 9 }), cellT(x.packageId, { fontSize: 9 }), cellT(x.name, { fontSize: 9 }), ...x.days.map((v) => num(v ? fmt.num(v) : "", { fontSize: 9 })), num(fmt.num(t), { fontSize: 9, bold: true })]),
       );
       if (pi === chunks.length - 1) {
         rows.push([
@@ -307,7 +309,7 @@ export function buildDeck(p: ProjectData, c: CalcResult): PptxGenJS {
           num(fmt.num(c.effortByBlockTotal), totalRow({ fontSize: 9 })),
         ]);
       }
-      table(s, rows, { x: 0.5, y: 1.4, w: W - 1, colW: [1.3, 0.9, 3.73, 1.1, 1.1, 1.1, 1.1, 1.1, 0.9], rowH: 0.36, fontSize: 9 });
+      table(s, rows, { x: 0.5, y: 1.4, w: W - 1, colW: (() => { const pw = Math.min(1.1, (W - 1 - 1.3 - 0.9 - 0.9 - 2.2) / nP); return [1.3, 0.9, W - 1 - 1.3 - 0.9 - 0.9 - pw * nP, ...phases.map(() => pw), 0.9]; })(), rowH: 0.36, fontSize: nP > 7 ? 8 : 9 });
     });
   }
 
@@ -341,12 +343,12 @@ export function buildDeck(p: ProjectData, c: CalcResult): PptxGenJS {
     );
     rows.push([cellT("TOTAL", totalRow()), num(fmt.num(c.effortByRolesTotal), totalRow()), num(fmt.num(c.effortByBlockTotal), totalRow()), num(fmt.num(c.effortByRolesTotal - c.effortByBlockTotal), totalRow()), cellT(st(c.checkPhasesTotal), totalRow({ align: "center", color: checkColor(c.checkPhasesTotal) }))]);
     rows.push([cellT("Work (Team) vs Block", { italic: true }), num(fmt.num(c.teamWorkTotal)), num(fmt.num(c.effortByBlockTotal)), num(fmt.num(c.teamWorkTotal - c.effortByBlockTotal)), cellT(st(c.checkTotal), { align: "center", bold: true, color: checkColor(c.checkTotal) })]);
-    table(s, rows, { x: 0.5, y: 1.4, w: W - 1, colW: [4.33, 2, 2, 2, 2], rowH: 0.45 });
+    table(s, rows, { x: 0.5, y: 1.4, w: W - 1, colW: [4.33, 2, 2, 2, 2], rowH: Math.min(0.45, 4.2 / (nP + 3)) });
     const orphan = p.allocations.filter((a, i) => a.role && !c.allocationInTeam[i]);
     if (orphan.length) {
       s.addText(
         `Engagement rows not matching any Team member (not counted in Work): ${orphan.map((a) => `${a.role} · ${a.grade} · ${a.tier}`).join("; ")}`,
-        { x: 0.5, y: 5.4, w: W - 1, h: 0.8, fontSize: 11, color: BAD, fontFace: FONT },
+        { x: 0.5, y: Math.min(6.2, 1.55 + Math.min(0.45, 4.2 / (nP + 3)) * (nP + 3)), w: W - 1, h: 0.8, fontSize: 11, color: BAD, fontFace: FONT },
       );
     }
   }

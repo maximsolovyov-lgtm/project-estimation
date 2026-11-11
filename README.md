@@ -21,6 +21,13 @@ A web app for building project estimates. It reproduces the logic of `Project_Es
   changed on the client is ignored.
 * The Excel export does not include the Rate Card sheet. The Rate column holds only the team's rates, as values.
 
+## Phases
+
+A new project always starts with the 5 standard phases (Discovery & Design, Build, Testing & Validation (UAT),
+Closure & Training, Go-Live & Hypercare). The **Phases** block lets you rename phases, set working days, add
+(up to 12), insert, move, delete (at least 1) and reset to the 5 standard phases. Engagement % and package man-days
+move with their phase. The Excel export and the presentation adapt to any number of phases.
+
 ## Calculation logic
 
 `src/shared/calc.ts` is a direct port of the template formulas. Each value is labelled with its source cell (F4…F14, L/M/N4:13,

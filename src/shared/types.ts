@@ -1,7 +1,10 @@
 // Shared data model for the frontend and the Worker.
 // Mirrors the "Project Estimation" sheet of Project_Estimation_Template.xlsx.
 
-export const PHASE_COUNT = 5;
+/** A new project always starts with 5 phases; the phase manager can add/remove phases. */
+export const DEFAULT_PHASE_COUNT = 5;
+export const MIN_PHASES = 1;
+export const MAX_PHASES = 12;
 export const ALL_BLOCK = "All";
 export const TIERS = ["Tier 1", "Tier 2", "Tier 3", "Tier 4", "Tier 5"] as const;
 

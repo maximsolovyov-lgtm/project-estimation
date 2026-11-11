@@ -106,6 +106,7 @@ button.add:hover { background: #eef5fc; }
 .g-track { position: relative; height: 18px; background: #f1f4f8; border-radius: 4px; }
 .g-bar { position: absolute; top: 0; bottom: 0; border-radius: 4px; }
 .c0 { background: #2e75b6; } .c1 { background: #f0a030; } .c2 { background: #4caf7a; } .c3 { background: #8e6fc8; } .c4 { background: #e0607e; }
+.c5 { background: #26a6a6; } .c6 { background: #a3794c; } .c7 { background: #5c6bc0; }
 
 .help ol { margin: 8px 0 0; padding-left: 20px; line-height: 1.6; }
 .help summary { cursor: pointer; color: var(--brand); font-weight: 600; }
@@ -138,7 +139,7 @@ button.add:hover { background: #eef5fc; }
 table.aligned { table-layout: fixed; min-width: 1180px; }
 table.aligned .block-col { width: 150px; }
 table.aligned .id-col { width: 110px; }
-table.aligned .ph-col { width: 122px; border-left: 1px solid #c9d4e1; }
+table.aligned .ph-col { width: var(--phw, 122px); border-left: 1px solid #c9d4e1; }
 table.aligned .tot-col { width: 92px; border-left: 2px solid #9fb3ca; }
 table.aligned .del-col { width: 36px; border-left: 1px solid #c9d4e1; }
 table.aligned td select, table.aligned td input { min-width: 0; max-width: 100%; }
@@ -146,3 +147,10 @@ table.aligned th.c { text-align: center; }
 table.aligned th, table.aligned td { overflow: hidden; text-overflow: ellipsis; }
 table.aligned th { vertical-align: bottom; }
 table.aligned th.ph-name { font-size: 12px; line-height: 1.25; }
+
+/* Phase management */
+.phase-mgr input:not([type="date"]) { width: 100%; }
+.ph-dot { display: inline-grid; place-items: center; width: 22px; height: 22px; border-radius: 50%; color: #fff; font-size: 11px; font-weight: 700; }
+.ph-actions { white-space: nowrap; text-align: right; }
+.ph-actions .icon-btn:disabled { opacity: .3; cursor: default; background: none; }
+button.add:disabled { opacity: .4; cursor: default; }
