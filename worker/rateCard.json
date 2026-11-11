@@ -1,0 +1,1815 @@
+{
+ "title": "Customertimes Rate Card — 2026 v0 (Shareable)",
+ "tiers": [
+  "Tier 1",
+  "Tier 2",
+  "Tier 3",
+  "Tier 4",
+  "Tier 5"
+ ],
+ "rows": [
+  {
+   "name": "Backend developer Lead",
+   "role": "Backend developer",
+   "code": "RSSP5",
+   "grade": "Lead",
+   "rates": [
+    282.1,
+    180.5,
+    125.1,
+    114.7,
+    86.4
+   ]
+  },
+  {
+   "name": "Backend developer Senior",
+   "role": "Backend developer",
+   "code": "RSSP4",
+   "grade": "Senior",
+   "rates": [
+    243.9,
+    155.0,
+    96.8,
+    95.1,
+    70.0
+   ]
+  },
+  {
+   "name": "Backend developer Middle",
+   "role": "Backend developer",
+   "code": "RSSP3",
+   "grade": "Middle",
+   "rates": [
+    212.7,
+    133.2,
+    75.5,
+    73.3,
+    49.9
+   ]
+  },
+  {
+   "name": "Backend developer Junior",
+   "role": "Backend developer",
+   "code": "RSSP2BE",
+   "grade": "Junior",
+   "rates": [
+    183.0,
+    110.8,
+    59.8,
+    109.6,
+    33.0
+   ]
+  },
+  {
+   "name": "Backend developer Trainee",
+   "role": "Backend developer",
+   "code": "RSSP1",
+   "grade": "Trainee",
+   "rates": [
+    157.5,
+    98.4,
+    43.6,
+    38.3,
+    22.6
+   ]
+  },
+  {
+   "name": "Mobile developer Lead",
+   "role": "Mobile developer",
+   "code": "RSMP5",
+   "grade": "Lead",
+   "rates": [
+    251.0,
+    172.7,
+    101.9,
+    107.0,
+    68.5
+   ]
+  },
+  {
+   "name": "Mobile developer Senior",
+   "role": "Mobile developer",
+   "code": "RSMP4",
+   "grade": "Senior",
+   "rates": [
+    229.7,
+    153.4,
+    88.5,
+    85.9,
+    48.6
+   ]
+  },
+  {
+   "name": "Mobile developer Middle",
+   "role": "Mobile developer",
+   "code": "RSMP3",
+   "grade": "Middle",
+   "rates": [
+    208.5,
+    136.3,
+    75.1,
+    69.1,
+    33.0
+   ]
+  },
+  {
+   "name": "Mobile developer Junior",
+   "role": "Mobile developer",
+   "code": "RSMP2",
+   "grade": "Junior",
+   "rates": [
+    173.1,
+    112.9,
+    59.3,
+    48.8,
+    25.1
+   ]
+  },
+  {
+   "name": "Frontend developer Technical",
+   "role": "Frontend developer",
+   "code": "RSWP6",
+   "grade": "Technical",
+   "rates": [
+    300.5,
+    195.0,
+    110.2,
+    111.2,
+    102.7
+   ]
+  },
+  {
+   "name": "Frontend developer Lead",
+   "role": "Frontend developer",
+   "code": "RSWP5",
+   "grade": "Lead",
+   "rates": [
+    258.0,
+    160.7,
+    98.7,
+    112.2,
+    90.7
+   ]
+  },
+  {
+   "name": "Frontend developer Senior",
+   "role": "Frontend developer",
+   "code": "RSWP4",
+   "grade": "Senior",
+   "rates": [
+    211.3,
+    139.4,
+    91.0,
+    89.1,
+    72.3
+   ]
+  },
+  {
+   "name": "Frontend developer Middle",
+   "role": "Frontend developer",
+   "code": "RSWP3",
+   "grade": "Middle",
+   "rates": [
+    187.3,
+    121.7,
+    70.0,
+    66.3,
+    51.4
+   ]
+  },
+  {
+   "name": "Frontend developer Junior",
+   "role": "Frontend developer",
+   "code": "RSWP2",
+   "grade": "Junior",
+   "rates": [
+    159.0,
+    104.6,
+    51.0,
+    43.9,
+    31.8
+   ]
+  },
+  {
+   "name": "Frontend developer Trainee",
+   "role": "Frontend developer",
+   "code": "RSWP1",
+   "grade": "Trainee",
+   "rates": [
+    null,
+    null,
+    37.6,
+    33.4,
+    20.9
+   ]
+  },
+  {
+   "name": "Business Analyst Lead",
+   "role": "Business Analyst",
+   "code": "AISP5",
+   "grade": "Lead",
+   "rates": [
+    235.4,
+    193.6,
+    91.7,
+    98.0,
+    75.0
+   ]
+  },
+  {
+   "name": "Business Analyst Senior",
+   "role": "Business Analyst",
+   "code": "AISP4",
+   "grade": "Senior",
+   "rates": [
+    207.1,
+    138.6,
+    81.4,
+    74.7,
+    62.7
+   ]
+  },
+  {
+   "name": "Business Analyst Middle",
+   "role": "Business Analyst",
+   "code": "AISP3",
+   "grade": "Middle",
+   "rates": [
+    173.1,
+    118.6,
+    63.5,
+    67.0,
+    48.4
+   ]
+  },
+  {
+   "name": "Business Analyst Junior",
+   "role": "Business Analyst",
+   "code": "AISP2",
+   "grade": "Junior",
+   "rates": [
+    146.2,
+    98.9,
+    49.1,
+    44.9,
+    35.1
+   ]
+  },
+  {
+   "name": "Business Analyst Trainee",
+   "role": "Business Analyst",
+   "code": "AISP1",
+   "grade": "Trainee",
+   "rates": [
+    null,
+    null,
+    null,
+    null,
+    23.7
+   ]
+  },
+  {
+   "name": "DevOps Engineer Lead",
+   "role": "DevOps Engineer",
+   "code": "RSOP5",
+   "grade": "Lead",
+   "rates": [
+    271.6,
+    165.9,
+    124.2,
+    124.0,
+    102.5
+   ]
+  },
+  {
+   "name": "DevOps Engineer Senior",
+   "role": "DevOps Engineer",
+   "code": "RSOP4",
+   "grade": "Senior",
+   "rates": [
+    224.0,
+    145.2,
+    107.2,
+    109.8,
+    84.4
+   ]
+  },
+  {
+   "name": "DevOps Engineer Middle",
+   "role": "DevOps Engineer",
+   "code": "RSOP3",
+   "grade": "Middle",
+   "rates": [
+    208.1,
+    128.8,
+    89.3,
+    89.7,
+    57.3
+   ]
+  },
+  {
+   "name": "DevOps Engineer Junior",
+   "role": "DevOps Engineer",
+   "code": "RSOP2",
+   "grade": "Junior",
+   "rates": [
+    187.9,
+    113.4,
+    60.0,
+    118.6,
+    36.5
+   ]
+  },
+  {
+   "name": "DevOps Engineer Trainee",
+   "role": "DevOps Engineer",
+   "code": "RSOP1",
+   "grade": "Trainee",
+   "rates": [
+    null,
+    null,
+    null,
+    null,
+    27.6
+   ]
+  },
+  {
+   "name": "Full stack Developer Lead",
+   "role": "Full stack Developer",
+   "code": "RSGP5",
+   "grade": "Lead",
+   "rates": [
+    286.3,
+    172.4,
+    115.8,
+    114.0,
+    91.1
+   ]
+  },
+  {
+   "name": "Full stack Developer Senior",
+   "role": "Full stack Developer",
+   "code": "RSGP4",
+   "grade": "Senior",
+   "rates": [
+    258.0,
+    142.5,
+    99.8,
+    96.5,
+    67.4
+   ]
+  },
+  {
+   "name": "Full stack Developer Middle",
+   "role": "Full stack Developer",
+   "code": "RSGP3",
+   "grade": "Middle",
+   "rates": [
+    215.6,
+    122.3,
+    81.5,
+    71.9,
+    46.5
+   ]
+  },
+  {
+   "name": "Full stack Developer Junior",
+   "role": "Full stack Developer",
+   "code": "RSGP2",
+   "grade": "Junior",
+   "rates": [
+    187.3,
+    104.1,
+    58.4,
+    51.6,
+    33.2
+   ]
+  },
+  {
+   "name": "Full stack Developer Trainee",
+   "role": "Full stack Developer",
+   "code": "RSGP1",
+   "grade": "Trainee",
+   "rates": [
+    null,
+    null,
+    null,
+    null,
+    25.2
+   ]
+  },
+  {
+   "name": "UX Design Lead",
+   "role": "UX Design",
+   "code": "RSIP5",
+   "grade": "Lead",
+   "rates": [
+    272.2,
+    166.4,
+    89.9,
+    81.0,
+    76.5
+   ]
+  },
+  {
+   "name": "UX Design Senior",
+   "role": "UX Design",
+   "code": "RSIP4",
+   "grade": "Senior",
+   "rates": [
+    217.0,
+    134.7,
+    69.5,
+    67.7,
+    60.6
+   ]
+  },
+  {
+   "name": "UX Design Middle",
+   "role": "UX Design",
+   "code": "RSIP3",
+   "grade": "Middle",
+   "rates": [
+    188.7,
+    118.6,
+    53.8,
+    62.1,
+    39.9
+   ]
+  },
+  {
+   "name": "UX Design Junior",
+   "role": "UX Design",
+   "code": "RSIP2",
+   "grade": "Junior",
+   "rates": [
+    159.7,
+    101.0,
+    42.7,
+    40.4,
+    27.1
+   ]
+  },
+  {
+   "name": "UX Design Trainee",
+   "role": "UX Design",
+   "code": "RSIP1",
+   "grade": "Trainee",
+   "rates": [
+    null,
+    null,
+    null,
+    null,
+    21.2
+   ]
+  },
+  {
+   "name": "Project Manager Lead",
+   "role": "Project Manager",
+   "code": "PPPP5",
+   "grade": "Lead",
+   "rates": [
+    265.7,
+    236.9,
+    135.2,
+    142.0,
+    87.3
+   ]
+  },
+  {
+   "name": "Project Manager Senior",
+   "role": "Project Manager",
+   "code": "PPPP4",
+   "grade": "Senior",
+   "rates": [
+    208.5,
+    168.1,
+    91.1,
+    87.9,
+    86.0
+   ]
+  },
+  {
+   "name": "Project Manager Middle",
+   "role": "Project Manager",
+   "code": "PPPP3",
+   "grade": "Middle",
+   "rates": [
+    181.1,
+    119.1,
+    68.6,
+    66.3,
+    51.3
+   ]
+  },
+  {
+   "name": "Project Manager Junior",
+   "role": "Project Manager",
+   "code": "PPPP2",
+   "grade": "Junior",
+   "rates": [
+    146.2,
+    99.4,
+    45.9,
+    53.7,
+    39.9
+   ]
+  },
+  {
+   "name": "Project Coordinator",
+   "role": "Project Coordinator",
+   "code": "PPPP1",
+   "grade": "Trainee",
+   "rates": [
+    null,
+    null,
+    null,
+    null,
+    28.5
+   ]
+  },
+  {
+   "name": "QA Performance Lead",
+   "role": "QA Performance",
+   "code": "RQVP6",
+   "grade": "Lead",
+   "rates": [
+    300.5,
+    178.9,
+    107.9,
+    100.0,
+    83.2
+   ]
+  },
+  {
+   "name": "QA Performance Senior",
+   "role": "QA Performance",
+   "code": "RQVP5",
+   "grade": "Senior",
+   "rates": [
+    279.3,
+    155.5,
+    94.0,
+    81.0,
+    61.2
+   ]
+  },
+  {
+   "name": "QA Performance Middle",
+   "role": "QA Performance",
+   "code": "RQVP4",
+   "grade": "Middle",
+   "rates": [
+    238.2,
+    135.2,
+    77.8,
+    64.2,
+    48.3
+   ]
+  },
+  {
+   "name": "QA Performance Junior",
+   "role": "QA Performance",
+   "code": "RQVP3",
+   "grade": "Junior",
+   "rates": [
+    200.0,
+    119.1,
+    54.7,
+    50.5,
+    36.6
+   ]
+  },
+  {
+   "name": "QA Performance Trainee",
+   "role": "QA Performance",
+   "code": "RQVP2",
+   "grade": "Trainee",
+   "rates": [
+    null,
+    null,
+    null,
+    null,
+    25.0
+   ]
+  },
+  {
+   "name": "QA Automation Lead",
+   "role": "QA Automation",
+   "code": "RQVP5",
+   "grade": "Lead",
+   "rates": [
+    279.3,
+    155.5,
+    94.0,
+    81.0,
+    61.2
+   ]
+  },
+  {
+   "name": "QA Automation Senior",
+   "role": "QA Automation",
+   "code": "RQVP4",
+   "grade": "Senior",
+   "rates": [
+    238.2,
+    135.2,
+    77.8,
+    64.2,
+    48.3
+   ]
+  },
+  {
+   "name": "QA Automation Middle",
+   "role": "QA Automation",
+   "code": "RQVP3",
+   "grade": "Middle",
+   "rates": [
+    200.0,
+    119.1,
+    54.7,
+    50.5,
+    36.6
+   ]
+  },
+  {
+   "name": "QA Automation Junior",
+   "role": "QA Automation",
+   "code": "RQVP2",
+   "grade": "Junior",
+   "rates": [
+    null,
+    null,
+    null,
+    null,
+    25.0
+   ]
+  },
+  {
+   "name": "QA Automation Trainee",
+   "role": "QA Automation",
+   "code": "RQVP1",
+   "grade": "Trainee",
+   "rates": [
+    null,
+    null,
+    null,
+    null,
+    23.7
+   ]
+  },
+  {
+   "name": "QA Manual Lead",
+   "role": "QA Manual",
+   "code": "RQSP5",
+   "grade": "Lead",
+   "rates": [
+    215.6,
+    126.4,
+    87.1,
+    79.3,
+    77.3
+   ]
+  },
+  {
+   "name": "QA Manual Senior",
+   "role": "QA Manual",
+   "code": "RQSP4",
+   "grade": "Senior",
+   "rates": [
+    201.4,
+    109.8,
+    75.1,
+    69.2,
+    59.8
+   ]
+  },
+  {
+   "name": "QA Manual Middle",
+   "role": "QA Manual",
+   "code": "RQSP3",
+   "grade": "Middle",
+   "rates": [
+    181.6,
+    96.8,
+    63.0,
+    59.6,
+    42.4
+   ]
+  },
+  {
+   "name": "QA Manual Junior",
+   "role": "QA Manual",
+   "code": "RQSP2",
+   "grade": "Junior",
+   "rates": [
+    147.6,
+    84.8,
+    44.1,
+    40.9,
+    32.2
+   ]
+  },
+  {
+   "name": "QA Manual Trainee",
+   "role": "QA Manual",
+   "code": "RQSP1",
+   "grade": "Trainee",
+   "rates": [
+    null,
+    null,
+    31.6,
+    28.4,
+    23.5
+   ]
+  },
+  {
+   "name": "Security Engineer Lead",
+   "role": "Security Engineer",
+   "code": "AICP5",
+   "grade": "Lead",
+   "rates": [
+    null,
+    null,
+    null,
+    null,
+    null
+   ]
+  },
+  {
+   "name": "Security Engineer Senior",
+   "role": "Security Engineer",
+   "code": "AICP4",
+   "grade": "Senior",
+   "rates": [
+    null,
+    null,
+    null,
+    null,
+    null
+   ]
+  },
+  {
+   "name": "Security Engineer Middle",
+   "role": "Security Engineer",
+   "code": "AICP3",
+   "grade": "Middle",
+   "rates": [
+    null,
+    null,
+    null,
+    null,
+    null
+   ]
+  },
+  {
+   "name": "Security Engineer Junior",
+   "role": "Security Engineer",
+   "code": "AICP2",
+   "grade": "Junior",
+   "rates": [
+    null,
+    null,
+    null,
+    null,
+    null
+   ]
+  },
+  {
+   "name": "Salesforce Architect Principal",
+   "role": "Salesforce Architect",
+   "code": "AILP6",
+   "grade": "Principal",
+   "rates": [
+    314.9,
+    254.7,
+    128.9,
+    132.9,
+    83.5
+   ]
+  },
+  {
+   "name": "Salesforce Architect Technical",
+   "role": "Salesforce Architect",
+   "code": "AILP5",
+   "grade": "Technical",
+   "rates": [
+    253.2,
+    192.7,
+    116.9,
+    140.1,
+    92.3
+   ]
+  },
+  {
+   "name": "Salesforce Business Analyst/Consultant Lead",
+   "role": "Salesforce Business Analyst/Consultant",
+   "code": "AISP5",
+   "grade": "Lead",
+   "rates": [
+    242.1,
+    199.1,
+    94.4,
+    100.8,
+    77.1
+   ]
+  },
+  {
+   "name": "Salesforce Business Analyst/Consultant Senior",
+   "role": "Salesforce Business Analyst/Consultant",
+   "code": "AISP4",
+   "grade": "Senior",
+   "rates": [
+    213.0,
+    142.5,
+    83.8,
+    76.9,
+    64.4
+   ]
+  },
+  {
+   "name": "Salesforce Business Analyst/Consultant Middle",
+   "role": "Salesforce Business Analyst/Consultant",
+   "code": "AISP3",
+   "grade": "Middle",
+   "rates": [
+    178.1,
+    122.0,
+    65.3,
+    68.9,
+    49.8
+   ]
+  },
+  {
+   "name": "Salesforce Business Analyst/Consultant Junior",
+   "role": "Salesforce Business Analyst/Consultant",
+   "code": "AISP2",
+   "grade": "Junior",
+   "rates": [
+    150.4,
+    101.7,
+    50.6,
+    46.2,
+    36.1
+   ]
+  },
+  {
+   "name": "Salesforce DevOps Engineer Lead",
+   "role": "Salesforce DevOps Engineer",
+   "code": "RSOP5",
+   "grade": "Lead",
+   "rates": [
+    274.1,
+    167.4,
+    125.4,
+    125.2,
+    103.4
+   ]
+  },
+  {
+   "name": "Salesforce DevOps Engineer Senior",
+   "role": "Salesforce DevOps Engineer",
+   "code": "RSOP4",
+   "grade": "Senior",
+   "rates": [
+    226.1,
+    146.6,
+    108.2,
+    110.8,
+    85.2
+   ]
+  },
+  {
+   "name": "Salesforce DevOps Engineer Middle",
+   "role": "Salesforce DevOps Engineer",
+   "code": "RSOP3",
+   "grade": "Middle",
+   "rates": [
+    210.1,
+    130.0,
+    90.1,
+    90.6,
+    57.8
+   ]
+  },
+  {
+   "name": "Salesforce DevOps Engineer Junior",
+   "role": "Salesforce DevOps Engineer",
+   "code": "RSOP2SF",
+   "grade": "Junior",
+   "rates": [
+    189.7,
+    115.0,
+    64.9,
+    60.3,
+    36.8
+   ]
+  },
+  {
+   "name": "Salesforce Integration Business Analyst/Consultant Lead",
+   "role": "Salesforce Integration Business Analyst/Consultant",
+   "code": "AISP5",
+   "grade": "Lead",
+   "rates": [
+    242.1,
+    199.1,
+    94.4,
+    100.8,
+    77.1
+   ]
+  },
+  {
+   "name": "Salesforce Integration Business Analyst/Consultant Senior",
+   "role": "Salesforce Integration Business Analyst/Consultant",
+   "code": "AISP4",
+   "grade": "Senior",
+   "rates": [
+    213.0,
+    142.5,
+    83.8,
+    76.9,
+    64.4
+   ]
+  },
+  {
+   "name": "Salesforce Integration Business Analyst/Consultant Middle",
+   "role": "Salesforce Integration Business Analyst/Consultant",
+   "code": "AISP3",
+   "grade": "Middle",
+   "rates": [
+    178.1,
+    122.0,
+    65.3,
+    68.9,
+    49.8
+   ]
+  },
+  {
+   "name": "Salesforce Integration Business Analyst/Consultant Junior",
+   "role": "Salesforce Integration Business Analyst/Consultant",
+   "code": "AISP2",
+   "grade": "Junior",
+   "rates": [
+    150.4,
+    101.7,
+    50.6,
+    46.2,
+    36.1
+   ]
+  },
+  {
+   "name": "Salesforce Support Engineer Lead",
+   "role": "Salesforce Support Engineer",
+   "code": "PCEP5",
+   "grade": "Lead",
+   "rates": [
+    223.2,
+    161.0,
+    80.1,
+    72.6,
+    84.0
+   ]
+  },
+  {
+   "name": "Salesforce Support Engineer Senior",
+   "role": "Salesforce Support Engineer",
+   "code": "PCEP4",
+   "grade": "Senior",
+   "rates": [
+    198.4,
+    138.0,
+    68.2,
+    65.1,
+    59.4
+   ]
+  },
+  {
+   "name": "Salesforce Support Engineer Middle",
+   "role": "Salesforce Support Engineer",
+   "code": "PCEP3",
+   "grade": "Middle",
+   "rates": [
+    166.4,
+    115.0,
+    53.0,
+    52.0,
+    49.5
+   ]
+  },
+  {
+   "name": "Salesforce Support Engineer Junior",
+   "role": "Salesforce Support Engineer",
+   "code": "PCEP2",
+   "grade": "Junior",
+   "rates": [
+    141.7,
+    96.9,
+    40.1,
+    34.3,
+    36.1
+   ]
+  },
+  {
+   "name": "Salesforce Developer Lead",
+   "role": "Salesforce Developer",
+   "code": "RSSP5",
+   "grade": "Lead",
+   "rates": [
+    290.2,
+    185.6,
+    128.7,
+    118.0,
+    88.8
+   ]
+  },
+  {
+   "name": "Salesforce Developer Senior",
+   "role": "Salesforce Developer",
+   "code": "RSSP4",
+   "grade": "Senior",
+   "rates": [
+    250.8,
+    159.4,
+    99.6,
+    97.8,
+    72.0
+   ]
+  },
+  {
+   "name": "Salesforce Developer Middle",
+   "role": "Salesforce Developer",
+   "code": "RSSP3",
+   "grade": "Middle",
+   "rates": [
+    218.8,
+    136.9,
+    77.7,
+    75.4,
+    51.4
+   ]
+  },
+  {
+   "name": "Salesforce Developer Junior",
+   "role": "Salesforce Developer",
+   "code": "RSSP2SF",
+   "grade": "Junior",
+   "rates": [
+    192.6,
+    118.2,
+    59.6,
+    53.8,
+    36.1
+   ]
+  },
+  {
+   "name": "SAP Architect Principal",
+   "role": "SAP Architect",
+   "code": "AILP6",
+   "grade": "Principal",
+   "rates": [
+    314.9,
+    254.7,
+    128.9,
+    132.9,
+    83.5
+   ]
+  },
+  {
+   "name": "SAP Architect Technical",
+   "role": "SAP Architect",
+   "code": "AILP5",
+   "grade": "Technical",
+   "rates": [
+    253.2,
+    192.7,
+    116.9,
+    140.1,
+    92.3
+   ]
+  },
+  {
+   "name": "SAP Consultant Lead",
+   "role": "SAP Consultant",
+   "code": "PPTP5",
+   "grade": "Lead",
+   "rates": [
+    262.5,
+    185.6,
+    103.0,
+    102.8,
+    89.4
+   ]
+  },
+  {
+   "name": "SAP Consultant Senior",
+   "role": "SAP Consultant",
+   "code": "PPTP4",
+   "grade": "Senior",
+   "rates": [
+    226.1,
+    157.2,
+    99.2,
+    95.6,
+    64.2
+   ]
+  },
+  {
+   "name": "SAP Consultant Middle",
+   "role": "SAP Consultant",
+   "code": "PPTP3",
+   "grade": "Middle",
+   "rates": [
+    182.4,
+    130.5,
+    67.7,
+    71.1,
+    45.4
+   ]
+  },
+  {
+   "name": "SAP Consultant Junior",
+   "role": "SAP Consultant",
+   "code": "PPTP2",
+   "grade": "Junior",
+   "rates": [
+    150.4,
+    106.5,
+    52.0,
+    45.9,
+    32.6
+   ]
+  },
+  {
+   "name": "SAP Consultant Trainee",
+   "role": "SAP Consultant",
+   "code": "PPTP1",
+   "grade": "Trainee",
+   "rates": [
+    null,
+    null,
+    null,
+    null,
+    23.8
+   ]
+  },
+  {
+   "name": "SAP Developer Lead",
+   "role": "SAP Developer",
+   "code": "RSSP5",
+   "grade": "Lead",
+   "rates": [
+    290.2,
+    185.6,
+    128.7,
+    118.0,
+    88.8
+   ]
+  },
+  {
+   "name": "SAP Developer Senior",
+   "role": "SAP Developer",
+   "code": "RSSP4",
+   "grade": "Senior",
+   "rates": [
+    250.8,
+    159.4,
+    99.6,
+    97.8,
+    72.0
+   ]
+  },
+  {
+   "name": "SAP Developer Middle",
+   "role": "SAP Developer",
+   "code": "RSSP3",
+   "grade": "Middle",
+   "rates": [
+    218.8,
+    136.9,
+    77.7,
+    75.4,
+    51.4
+   ]
+  },
+  {
+   "name": "SAP Developer Junior",
+   "role": "SAP Developer",
+   "code": "RSSP2SAP",
+   "grade": "Junior",
+   "rates": [
+    192.6,
+    111.3,
+    58.7,
+    47.3,
+    35.8
+   ]
+  },
+  {
+   "name": "SAP Developer Trainee",
+   "role": "SAP Developer",
+   "code": "RSSP1",
+   "grade": "Trainee",
+   "rates": [
+    162.0,
+    101.1,
+    44.9,
+    39.4,
+    23.2
+   ]
+  },
+  {
+   "name": "Data Modeler",
+   "role": "Data Modeler",
+   "code": "AIFP4",
+   "grade": "Senior",
+   "rates": [
+    242.1,
+    158.3,
+    95.4,
+    93.5,
+    73.5
+   ]
+  },
+  {
+   "name": "Data Engineer Lead",
+   "role": "Data Engineer",
+   "code": "AIFP5",
+   "grade": "Lead",
+   "rates": [
+    275.6,
+    194.6,
+    112.5,
+    117.3,
+    95.7
+   ]
+  },
+  {
+   "name": "Data Engineer Senior",
+   "role": "Data Engineer",
+   "code": "AIFP4",
+   "grade": "Senior",
+   "rates": [
+    242.1,
+    158.3,
+    95.4,
+    93.5,
+    73.5
+   ]
+  },
+  {
+   "name": "Data Engineer Middle",
+   "role": "Data Engineer",
+   "code": "AIFP3",
+   "grade": "Middle",
+   "rates": [
+    202.8,
+    134.3,
+    80.1,
+    74.0,
+    51.5
+   ]
+  },
+  {
+   "name": "Data Engineer Junior",
+   "role": "Data Engineer",
+   "code": "AIFP2",
+   "grade": "Junior",
+   "rates": [
+    163.5,
+    111.8,
+    54.9,
+    46.6,
+    36.8
+   ]
+  },
+  {
+   "name": "Data Scientist Lead",
+   "role": "Data Scientist",
+   "code": "ADBP5",
+   "grade": "Lead",
+   "rates": [
+    316.4,
+    185.0,
+    112.5,
+    109.3,
+    109.3
+   ]
+  },
+  {
+   "name": "Data Scientist Senior",
+   "role": "Data Scientist",
+   "code": "ADBP4",
+   "grade": "Senior",
+   "rates": [
+    272.7,
+    164.7,
+    100.1,
+    92.7,
+    79.9
+   ]
+  },
+  {
+   "name": "Data Scientist Middle",
+   "role": "Data Scientist",
+   "code": "ADBP3",
+   "grade": "Middle",
+   "rates": [
+    229.0,
+    138.5,
+    80.6,
+    71.1,
+    55.7
+   ]
+  },
+  {
+   "name": "Data Architect Enterprise",
+   "role": "Data Architect",
+   "code": "AILP7",
+   "grade": "Enterprise",
+   "rates": [
+    343.0,
+    287.4,
+    144.7,
+    154.0,
+    113.4
+   ]
+  },
+  {
+   "name": "Data Architect",
+   "role": "Data Architect",
+   "code": "AILP6",
+   "grade": "Architect",
+   "rates": [
+    317.8,
+    257.0,
+    130.2,
+    134.2,
+    84.2
+   ]
+  },
+  {
+   "name": "Data Business Analyst Lead",
+   "role": "Data Business Analyst",
+   "code": "ADAP5",
+   "grade": "Lead",
+   "rates": [
+    255.2,
+    171.7,
+    104.9,
+    111.5,
+    74.2
+   ]
+  },
+  {
+   "name": "Data Business Analyst Senior",
+   "role": "Data Business Analyst",
+   "code": "ADAP4",
+   "grade": "Senior",
+   "rates": [
+    287.2,
+    146.6,
+    92.0,
+    74.7,
+    57.6
+   ]
+  },
+  {
+   "name": "Data Business Analyst Middle",
+   "role": "Data Business Analyst",
+   "code": "ADAP3",
+   "grade": "Middle",
+   "rates": [
+    185.3,
+    125.7,
+    80.6,
+    82.7,
+    44.9
+   ]
+  },
+  {
+   "name": "AI/ML Dev Ops.",
+   "role": "AI/ML Dev Ops.",
+   "code": "RSLP5",
+   "grade": "Lead",
+   "rates": [
+    363.7,
+    218.9,
+    125.8,
+    126.8,
+    null
+   ]
+  },
+  {
+   "name": "AI/ML Dev Ops.",
+   "role": "AI/ML Dev Ops.",
+   "code": "RSLP4",
+   "grade": "Senior",
+   "rates": [
+    319.3,
+    190.6,
+    103.5,
+    126.8,
+    null
+   ]
+  },
+  {
+   "name": "AI/ML Dev Ops.",
+   "role": "AI/ML Dev Ops.",
+   "code": "RSLP3",
+   "grade": "Middle",
+   "rates": [
+    270.3,
+    156.9,
+    81.1,
+    84.2,
+    null
+   ]
+  },
+  {
+   "name": "BI Consultant Lead",
+   "role": "BI Consultant",
+   "code": "ADAP5BI",
+   "grade": "Lead",
+   "rates": [
+    255.2,
+    171.7,
+    103.7,
+    82.7,
+    80.1
+   ]
+  },
+  {
+   "name": "BI Consultant Senior",
+   "role": "BI Consultant",
+   "code": "ADAP4BI",
+   "grade": "Senior",
+   "rates": [
+    227.6,
+    146.6,
+    92.0,
+    92.7,
+    69.3
+   ]
+  },
+  {
+   "name": "BI Consultant Middle",
+   "role": "BI Consultant",
+   "code": "ADAP3BI",
+   "grade": "Middle",
+   "rates": [
+    185.3,
+    125.7,
+    75.3,
+    77.1,
+    47.8
+   ]
+  },
+  {
+   "name": "BI Consultant Junior",
+   "role": "BI Consultant",
+   "code": "ADAP2",
+   "grade": "Junior",
+   "rates": [
+    159.1,
+    109.7,
+    63.9,
+    43.0,
+    33.2
+   ]
+  },
+  {
+   "name": "Solution Architect",
+   "role": "Solution Architect",
+   "code": "AILP6",
+   "grade": "Senior",
+   "rates": [
+    314.9,
+    254.7,
+    128.9,
+    132.9,
+    83.5
+   ]
+  },
+  {
+   "name": "Solution Architect",
+   "role": "Solution Architect",
+   "code": "AILP7",
+   "grade": "Architect",
+   "rates": [
+    339.9,
+    284.9,
+    143.4,
+    152.6,
+    112.4
+   ]
+  },
+  {
+   "name": "Solution Architect",
+   "role": "Solution Architect",
+   "code": "AILP6",
+   "grade": "Associate",
+   "rates": [
+    314.9,
+    254.7,
+    128.9,
+    132.9,
+    83.5
+   ]
+  },
+  {
+   "name": "Integration Architect",
+   "role": "Integration Architect",
+   "code": "AILP6",
+   "grade": "Architect",
+   "rates": [
+    314.9,
+    254.7,
+    128.9,
+    132.9,
+    83.5
+   ]
+  },
+  {
+   "name": "Integration Lead",
+   "role": "Integration",
+   "code": "RSSP5",
+   "grade": "Lead",
+   "rates": [
+    282.1,
+    180.5,
+    125.1,
+    114.7,
+    86.4
+   ]
+  },
+  {
+   "name": "Integration developer",
+   "role": "Integration developer",
+   "code": "RSSP4",
+   "grade": "Senior",
+   "rates": [
+    243.9,
+    155.0,
+    96.8,
+    95.1,
+    70.0
+   ]
+  },
+  {
+   "name": "MS Consultant Lead",
+   "role": "MS Consultant",
+   "code": null,
+   "grade": "Lead",
+   "rates": [
+    262.5,
+    185.6,
+    103.0,
+    102.8,
+    89.4
+   ]
+  },
+  {
+   "name": "MS Consultant Senior",
+   "role": "MS Consultant",
+   "code": null,
+   "grade": "Senior",
+   "rates": [
+    226.1,
+    157.2,
+    99.2,
+    95.6,
+    64.2
+   ]
+  },
+  {
+   "name": "MS Consultant Middle",
+   "role": "MS Consultant",
+   "code": null,
+   "grade": "Middle",
+   "rates": [
+    182.4,
+    130.5,
+    67.7,
+    71.1,
+    45.4
+   ]
+  },
+  {
+   "name": "MS Consultant Junior",
+   "role": "MS Consultant",
+   "code": null,
+   "grade": "Junior",
+   "rates": [
+    150.4,
+    106.5,
+    52.0,
+    45.9,
+    32.6
+   ]
+  },
+  {
+   "name": "MS Consultant Trainee",
+   "role": "MS Consultant",
+   "code": null,
+   "grade": "Trainee",
+   "rates": [
+    null,
+    null,
+    null,
+    null,
+    23.8
+   ]
+  },
+  {
+   "name": "MS Developer Lead",
+   "role": "MS Developer",
+   "code": null,
+   "grade": "Lead",
+   "rates": [
+    290.2,
+    185.6,
+    128.7,
+    118.0,
+    88.8
+   ]
+  },
+  {
+   "name": "MS Developer Senior",
+   "role": "MS Developer",
+   "code": null,
+   "grade": "Senior",
+   "rates": [
+    250.8,
+    159.4,
+    99.6,
+    97.8,
+    72.0
+   ]
+  },
+  {
+   "name": "MS Developer Middle",
+   "role": "MS Developer",
+   "code": null,
+   "grade": "Middle",
+   "rates": [
+    218.8,
+    136.9,
+    77.7,
+    75.4,
+    51.4
+   ]
+  },
+  {
+   "name": "MS Developer Junior",
+   "role": "MS Developer",
+   "code": null,
+   "grade": "Junior",
+   "rates": [
+    192.6,
+    111.3,
+    58.7,
+    47.3,
+    35.8
+   ]
+  },
+  {
+   "name": "MS Developer Trainee",
+   "role": "MS Developer",
+   "code": null,
+   "grade": "Trainee",
+   "rates": [
+    162.0,
+    101.1,
+    44.9,
+    39.4,
+    23.2
+   ]
+  },
+  {
+   "name": "SPIFF Consultant Lead",
+   "role": "SPIFF Consultant",
+   "code": null,
+   "grade": "Lead",
+   "rates": [
+    242.1,
+    199.1,
+    94.4,
+    100.8,
+    77.1
+   ]
+  },
+  {
+   "name": "SPIFF Configuration Consultant Middle",
+   "role": "SPIFF Configuration Consultant",
+   "code": null,
+   "grade": "Middle",
+   "rates": [
+    178.1,
+    122.0,
+    65.3,
+    68.9,
+    49.8
+   ]
+  },
+  {
+   "name": "SPIFF Project Manager Middle",
+   "role": "SPIFF Project Manager",
+   "code": null,
+   "grade": "Middle",
+   "rates": [
+    181.1,
+    119.1,
+    68.6,
+    66.3,
+    51.3
+   ]
+  },
+  {
+   "name": "SPIFF Technical Consultant Middle",
+   "role": "SPIFF Technical Consultant",
+   "code": null,
+   "grade": "Middle",
+   "rates": [
+    178.1,
+    122.0,
+    65.3,
+    68.9,
+    49.8
+   ]
+  },
+  {
+   "name": "SPIFF Developer Middle",
+   "role": "SPIFF Developer",
+   "code": null,
+   "grade": "Middle",
+   "rates": [
+    218.8,
+    136.9,
+    77.7,
+    75.4,
+    51.4
+   ]
+  },
+  {
+   "name": "SPIFF Solution Architect Functional",
+   "role": "SPIFF Solution Architect Functional",
+   "code": null,
+   "grade": "Architect",
+   "rates": [
+    253.2,
+    192.7,
+    116.9,
+    140.1,
+    92.3
+   ]
+  },
+  {
+   "name": "AI Agent Senior",
+   "role": "AI Agent",
+   "code": "AIALL5",
+   "grade": "Senior",
+   "rates": [
+    100.0,
+    100.0,
+    100.0,
+    100.0,
+    100.0
+   ]
+  }
+ ],
+ "defaultHolidays": [
+  "2013-01-01",
+  "2013-01-02",
+  "2013-01-03",
+  "2013-01-04",
+  "2013-01-05",
+  "2013-01-06",
+  "2013-01-07",
+  "2013-01-08",
+  "2013-03-08",
+  "2013-05-01",
+  "2013-05-02",
+  "2013-05-03",
+  "2013-05-09",
+  "2013-05-10",
+  "2013-06-12",
+  "2013-11-04",
+  "2014-01-01",
+  "2014-01-02",
+  "2014-01-03",
+  "2014-01-04",
+  "2014-01-05",
+  "2014-01-06",
+  "2014-01-07",
+  "2014-01-08",
+  "2014-02-24",
+  "2014-03-10",
+  "2014-05-01",
+  "2014-05-02",
+  "2014-05-09",
+  "2014-06-12",
+  "2014-06-13",
+  "2014-11-03",
+  "2014-11-04"
+ ]
+}

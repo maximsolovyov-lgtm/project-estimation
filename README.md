@@ -1,0 +1,90 @@
+# Project Estimation (Cloudflare)
+
+A web app for building project estimates. It reproduces the logic of `Project_Estimation_Template.xlsx`
+(the "Project Estimation" sheet) and runs on Cloudflare Workers with a D1 database.
+
+## Features
+
+| Button | What it does |
+|---|---|
+| **Создать проект** | New project: blank, or prefilled with the example from the template |
+| **Сохранить проект** | Saves the project to D1 (creates it or updates it) |
+| **Выбрать на редактирование** | List of saved projects with search, open and delete |
+| **Выгрузить в Excel** | `.xlsx` with the same layout and live formulas as the template (WORKDAY, SUMPRODUCT, SUMIF, uplift for "All", conditional formatting for the checks, drop-downs) |
+| **Сформировать презентацию** | `.pptx` with one element per slide: title, Total for the project, Team, Workload, **Gantt chart of the schedule**, Phases, Roles engagement, Block Estimation, Phase Estimation, Service packages, Cost structure, Consistency check, Assumptions |
+
+### The Rate Card stays hidden
+* The Rate Card (`worker/rateCard.json`) is bundled **only into the Worker**. It is not in the frontend bundle.
+* The browser gets the list of roles and grades without prices (`GET /api/catalog`), plus the rates for the
+  Role+Grade+Tier combinations placed in Team (`POST /api/rates`).
+* When a project is saved or loaded, the server recomputes the rates from the Rate Card, so a rate
+  changed on the client is ignored.
+* The Excel export does not include the Rate Card sheet. The Rate column holds only the team's rates, as values.
+
+## Calculation logic
+
+`src/shared/calc.ts` is a direct port of the template formulas. Each value is labelled with its source cell (F4…F14, L/M/N4:13,
+I15:N15, I18:N22, N23:N34, I36:N36, Q3:Q14, V3:V14). `test/calc.test.ts` checks the results against the values Excel
+calculated in the original file.
+
+One difference from the template: on the template, the Phase Estimation cells V6/V7 summed the wrong columns,
+so "Closure & Training" and "Go-Live & Hypercare" showed each other's values. The app gives each phase its own column.
+
+## Running locally
+
+```bash
+npm install
+```
+
+```bash
+npm run db:migrate:local
+```
+
+```bash
+npm run preview   # build + wrangler dev → http://localhost:8787
+```
+
+```bash
+npm test
+```
+
+## Deploying to Cloudflare
+
+```bash
+npx wrangler login
+```
+
+```bash
+npx wrangler d1 create project-estimation
+```
+
+Copy the `database_id` it prints into `wrangler.jsonc`, then run:
+
+```bash
+npm run db:migrate:remote
+```
+
+```bash
+npm run deploy
+```
+
+The app has no built-in authentication. To restrict access, turn on Cloudflare Access (Zero Trust) for the Worker's domain.
+
+## Updating the Rate Card
+
+```bash
+python3 scripts/extract_rate_card.py path/to/Project_Estimation_Template.xlsx
+```
+
+The script regenerates `worker/rateCard.json` (Fix-Price / A-la-Carte tiers plus the default holidays). Run `npm run deploy` afterwards.
+
+## Structure
+
+```
+worker/            Cloudflare Worker: API, D1, Rate Card (server-side only)
+src/shared/        data model, calculation engine, WORKDAY, templates
+src/App.tsx        estimation form UI
+src/export/        Excel (exceljs) and PowerPoint (pptxgenjs) generation in the browser
+migrations/        D1 schema
+test/              tests for the calculations and the exports
+```
