@@ -154,3 +154,8 @@ table.aligned th.ph-name { font-size: 12px; line-height: 1.25; }
 .ph-actions { white-space: nowrap; text-align: right; }
 .ph-actions .icon-btn:disabled { opacity: .3; cursor: default; background: none; }
 button.add:disabled { opacity: .4; cursor: default; }
+
+/* Import result notice */
+.import-notes { border-left: 4px solid var(--ok); background: #f3fbf5; }
+.import-notes.warn { border-left-color: #e0a100; background: #fffaf0; }
+.import-notes ul { margin: 8px 0 0; padding-left: 20px; line-height: 1.5; }

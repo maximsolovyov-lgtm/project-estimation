@@ -18,7 +18,8 @@ export const api = {
     req<{ rates: number[] }>("/api/rates", { method: "POST", body: JSON.stringify({ items }) }).then((r) => r.rates),
   list: () => req<ProjectSummary[]>("/api/projects"),
   get: (id: string) => req<StoredProject>(`/api/projects/${id}`),
-  create: (data: ProjectData) => req<StoredProject>("/api/projects", { method: "POST", body: JSON.stringify({ data }) }),
+  create: (data: ProjectData, opts: { uniqueName?: boolean } = {}) =>
+    req<StoredProject>("/api/projects", { method: "POST", body: JSON.stringify({ data, ...opts }) }),
   update: (id: string, data: ProjectData) =>
     req<StoredProject>(`/api/projects/${id}`, { method: "PUT", body: JSON.stringify({ data }) }),
   remove: (id: string) => req<{ ok: boolean }>(`/api/projects/${id}`, { method: "DELETE" }),

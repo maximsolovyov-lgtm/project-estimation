@@ -10,6 +10,7 @@ A web app for building project estimates. It reproduces the logic of `Project_Es
 | **Create project** | New project: blank, or prefilled with the example from the template |
 | **Save project** | Saves the project to D1 (creates it or updates it) |
 | **Open project** | List of saved projects with search, open and delete |
+| **Import from Excel** | Creates a project from a filled-in estimation file (the original template layout or a file exported by this app, any number of phases). Saved immediately; if the name exists it becomes "<name> v2", "v3", … Rates come from the Rate Card, not from the file |
 | **Export to Excel** | `.xlsx` with the same layout and live formulas as the template (WORKDAY, SUMPRODUCT, SUMIF, uplift for "All", conditional formatting for the checks, drop-downs) |
 | **Generate presentation** | `.pptx` with one element per slide: title, Total for the project, Team, Workload, **Gantt chart of the schedule**, Phases, Roles engagement, Block Estimation, Phase Estimation, Service packages, Cost structure, Consistency check, Assumptions |
 

@@ -5,6 +5,7 @@
 import { buildCatalog, lookupRate } from "./rates";
 import { ASSETS } from "./assets.generated";
 import type { ProjectData, ProjectSummary, RateQuery, StoredProject } from "../src/shared/types";
+import { uniqueProjectName } from "../src/shared/naming";
 
 interface Env {
   DB: D1Database;
@@ -65,9 +66,14 @@ async function api(req: Request, env: Env, url: URL): Promise<Response> {
   }
 
   if (path === "/api/projects" && method === "POST") {
-    const body = (await req.json().catch(() => null)) as { data?: unknown } | null;
+    const body = (await req.json().catch(() => null)) as { data?: unknown; uniqueName?: boolean } | null;
     if (!body || !validate(body.data)) return error(400, "Invalid project data");
-    const data = withServerRates(body.data);
+    let data = withServerRates(body.data);
+    if (body.uniqueName) {
+      // Import: "<name>" when free, otherwise "<name> v2", "<name> v3", …
+      const { results } = await env.DB.prepare("SELECT name FROM projects").all<{ name: string }>();
+      data = { ...data, name: uniqueProjectName(data.name, results.map((r) => r.name)) };
+    }
     const id = crypto.randomUUID();
     const now = new Date().toISOString();
     await env.DB.prepare("INSERT INTO projects (id, name, data, created_at, updated_at) VALUES (?, ?, ?, ?, ?)")

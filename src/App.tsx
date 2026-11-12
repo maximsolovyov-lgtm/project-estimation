@@ -28,6 +28,8 @@ export default function App() {
   const [toast, setToast] = useState<Toast>(null);
   const [showOpen, setShowOpen] = useState(false);
   const [showCreate, setShowCreate] = useState(false);
+  const [importNotes, setImportNotes] = useState<{ title: string; items: string[] } | null>(null);
+  const fileInput = useRef<HTMLInputElement>(null);
   const toastTimer = useRef<number | undefined>(undefined);
 
   const notify = useCallback((t: Toast) => {
@@ -144,6 +146,39 @@ export default function App() {
     }
   }
 
+  /** Import from Excel: parse in the browser, save as a new project ("<name> v2" if the name is taken), open it. */
+  async function importExcel(file: File) {
+    if (!confirmDiscard()) return;
+    setBusy("import");
+    try {
+      const { importExcelFile } = await import("./import/excel");
+      const { data: parsed, warnings } = await importExcelFile(file);
+      const saved = await api.create(normalizePhases(parsed), { uniqueName: true });
+      const d = normalizePhases(saved.data);
+      setData(d);
+      setProjectId(saved.id);
+      setDirty(false);
+      localStorage.setItem("pe:lastProject", saved.id);
+      const notes = [...warnings];
+      if (saved.name !== parsed.name) notes.unshift(`A project named "${parsed.name}" already exists, so this one was saved as "${saved.name}".`);
+      const noRate = d.team.filter((m) => m.role && m.grade && m.tier && !m.rate);
+      if (noRate.length) notes.push(`No Rate Card rate for: ${noRate.map((m) => `${m.role} · ${m.grade} · ${m.tier}`).join("; ")}.`);
+      const orphan = d.allocations.filter((a) => a.role && !d.team.some((m) => sameCombo(m, a)));
+      if (orphan.length) notes.push(`Engagement rows not matching any Team member: ${orphan.map((a) => `${a.role} · ${a.grade} · ${a.tier}`).join("; ")}.`);
+      setImportNotes({
+        title: `Imported "${file.name}" as project "${saved.name}": ${d.phases.length} phases, ${d.team.length} team members, ${d.allocations.length} engagement rows, ${d.packages.length} service packages.`,
+        items: notes,
+      });
+      notify({ kind: "ok", text: `Imported and saved as "${saved.name}"` });
+    } catch (e) {
+      console.error(e);
+      notify({ kind: "bad", text: `Import failed: ${(e as Error).message}` });
+    } finally {
+      setBusy(null);
+      if (fileInput.current) fileInput.current.value = "";
+    }
+  }
+
   async function exportExcel() {
     if (!data || !calc) return;
     setBusy("xlsx");
@@ -247,6 +282,19 @@ export default function App() {
           <button onClick={() => confirmDiscard() && setShowCreate(true)}>＋ Create project</button>
           <button className="primary" onClick={save} disabled={!!busy}>{busyLabel("save", "💾 Save project")}</button>
           <button onClick={() => setShowOpen(true)} disabled={!!busy}>📂 Open project</button>
+          <button onClick={() => fileInput.current?.click()} disabled={!!busy} title="Create a project from a filled-in estimation Excel file">
+            {busyLabel("import", "⬆ Import from Excel")}
+          </button>
+          <input
+            ref={fileInput}
+            type="file"
+            accept=".xlsx,.xlsm,application/vnd.openxmlformats-officedocument.spreadsheetml.sheet"
+            hidden
+            onChange={(e) => {
+              const f = e.target.files?.[0];
+              if (f) importExcel(f);
+            }}
+          />
           <button onClick={exportExcel} disabled={!!busy}>{busyLabel("xlsx", "⬇ Export to Excel")}</button>
           <button onClick={exportPptx} disabled={!!busy}>{busyLabel("pptx", "📊 Generate presentation")}</button>
         </nav>
@@ -255,6 +303,17 @@ export default function App() {
       {toast && <div className={`toast ${toast.kind}`} onClick={() => setToast(null)}>{toast.text}</div>}
 
       <main>
+        {importNotes && (
+          <section className={`card import-notes ${importNotes.items.length ? "warn" : ""}`}>
+            <button className="icon-btn" style={{ float: "right" }} onClick={() => setImportNotes(null)} aria-label="Close">✕</button>
+            <b>{importNotes.title}</b>
+            {importNotes.items.length > 0 && (
+              <ul>
+                {importNotes.items.map((t, i) => <li key={i}>{t}</li>)}
+              </ul>
+            )}
+          </section>
+        )}
         <section className="card project-head">
           <label>
             <span>Project Name</span>
